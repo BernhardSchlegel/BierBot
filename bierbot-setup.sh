@@ -23,14 +23,15 @@ echo installing git...
 sudo apt-get install git -y
 
 echo cloning repo into /home/pi/BierBot
-cd ~
-git clone https://github.com/BernhardSchlegel/BierBot.git
+cd /home/pi
+git clone https://github.com/BernhardSchlegel/BierBot-PrivatePrepare.git
+mv BierBot-PrivatePrepare BierBot
 
 echo installing bower...
 sudo npm install -g bower
 
 echo installing gpio interface...
-sudo apt-get install pigpio
+sudo apt-get install pigpio -y
 
 echo chmodding rights of wireless tools and BierBot directory
 sudo chmod -R u+x /home/pi/BierBot/sys
@@ -38,25 +39,25 @@ sudo chown -R 1000:0 /home/pi/BierBot/
 sudo chmod -R u+w /home/pi/BierBot/
 
 echo setting up users in mongodb
-mongo < ~/BierBot/setup/bierbot-setup-mongo.js
+mongo < /home/pi/BierBot/setup/bierbot-setup-mongo.js
 
 echo creating autostart...
-sudo cp ~/BierBot/sys/bierbot.service /etc/systemd/system/bierbot.service
+sudo cp /home/pi/BierBot/sys/bierbot.service /etc/systemd/system/bierbot.service
 sudo systemctl enable bierbot.service
 
 echo modifying network settings to enable wifi
-sudo tee /etc/network/interfaces < ~/BierBot/sys/interfaces
+sudo tee /etc/network/interfaces < /home/pi/BierBot/sys/interfaces
 
 echo installing dependencies for backend...
-cd ~/BierBot/server
+cd /home/pi/BierBot/server
 sudo npm install
 
 echo patching dependencies..
-cd ~/BierBot/server
+cd /home/pi/BierBot/server
 node setup.js
 
 echo installing dependencies for frontend...
-cd ~/BierBot/client
-bower install
+cd /home/pi/BierBot/client
+sudo -u pi bower install
 
 echo ALL DONE - gut Sud!
