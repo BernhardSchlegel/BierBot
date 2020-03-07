@@ -5,23 +5,6 @@ if [ "$EUID" -ne 0 ]
   exit
 fi
 
-echo upgrading operating system...
-sudo apt-get update -y
-sudo apt-get dist-upgrade -y
-
-echo installing mongodb...
-sudo apt-get install mongodb-server -y
-
-echo starting mongodb service...
-sudo service mongodb start
-
-echo installing NodeJS...
-curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
-sudo apt-get install -y nodejs
-
-echo installing git...
-sudo apt-get install git -y
-
 echo cloning repo into /home/pi/BierBot
 cd /home/pi
 git clone --depth=1 https://github.com/BernhardSchlegel/BierBot-PrivatePrepare.git
