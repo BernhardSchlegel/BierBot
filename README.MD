@@ -23,7 +23,17 @@ This README is also available in [German ![Germany](https://raw.githubuserconten
 
 ## Screenshots
 
-
+<p float="left">
+   <img src="doc/img/screen_manual.png" width="300" />
+   <img src="doc/img/screen_recipes.png" width="300" />
+   <img src="doc/img/screen_recipes_editstep.png" width="300" />
+   <img src="doc/img/screen_automatic1.png" width="300" />
+   <img src="doc/img/screen_automatic.png" width="300" />
+   <img src="doc/img/screen_settings.png" width="300" />
+   <img src="doc/img/screen_settings_hardware.png" width="300" />
+   <img src="doc/img/screen_logs.png" width="300" />
+   <img src="doc/img/screen_logs_detail.png" width="300" />
+</p>
 
 ## Software-Installation
 
@@ -64,7 +74,7 @@ If you want to know what the script does in the background, check out the
 
 The default BierBot wiring is as follows (I'll use the `RPi# (pigpio#)` syntax):
 
-![BierBot Wiring](/doc/img/wiring.png)
+![BierBot Wiring](doc/img/wiring.png)
 
 - The [DS18B20](https://amzn.to/2TQrvxQ) sensor is connected to 3,3V, GND, and
   Pin Number RPi 7 (pi-gpio 7). With the latter being the data-channel of your sensor.

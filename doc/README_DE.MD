@@ -1,5 +1,5 @@
 <p align="center">
-   <img width="300" src="/doc/img/BierBot-Logo_338x70.png" alt="BierBot Logo">
+   <img width="300" src="img/BierBot-Logo_338x70.png" alt="BierBot Logo">
    <h1 align="center">Brau-Software für den Raspberry Pi</h1>
 </p>
 
@@ -24,6 +24,17 @@ This README is also available in [English ![English](https://raw.githubuserconte
 
 ## Screenshots
 
+<p float="left">
+   <img src="img/screen_manual.png" width="300" />
+   <img src="img/screen_recipes.png" width="300" />
+   <img src="img/screen_recipes_editstep.png" width="300" />
+   <img src="img/screen_automatic1.png" width="300" />
+   <img src="img/screen_automatic.png" width="300" />
+   <img src="img/screen_settings.png" width="300" />
+   <img src="img/screen_settings_hardware.png" width="300" />
+   <img src="img/screen_logs.png" width="300" />
+   <img src="img/screen_logs_detail.png" width="300" />
+</p>
 
 ## Software-Installation
 
