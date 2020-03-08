@@ -24,15 +24,15 @@ This README is also available in [German ![Germany](https://raw.githubuserconten
 ## Screenshots
 
 <p float="left">
-   <img src="doc/img/screen_manual.png" width="300" />
-   <img src="doc/img/screen_recipes.png" width="300" />
-   <img src="doc/img/screen_recipes_editstep.png" width="300" />
-   <img src="doc/img/screen_automatic1.png" width="300" />
-   <img src="doc/img/screen_automatic.png" width="300" />
-   <img src="doc/img/screen_settings.png" width="300" />
-   <img src="doc/img/screen_settings_hardware.png" width="300" />
-   <img src="doc/img/screen_logs.png" width="300" />
-   <img src="doc/img/screen_logs_detail.png" width="300" />
+   <img src="doc/img/screen_manual.png" width="280" />
+   <img src="doc/img/screen_recipes.png" width="280" />
+   <img src="doc/img/screen_recipes_editstep.png" width="280" />
+   <img src="doc/img/screen_automatic1.png" width="280" />
+   <img src="doc/img/screen_automatic.png" width="280" />
+   <img src="doc/img/screen_settings.png" width="280" />
+   <img src="doc/img/screen_settings_hardware.png" width="280" />
+   <img src="doc/img/screen_logs.png" width="280" />
+   <img src="doc/img/screen_logs_detail.png" width="280" />
 </p>
 
 ## Software-Installation
