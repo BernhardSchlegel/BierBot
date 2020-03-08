@@ -62,7 +62,7 @@ sudo tee /etc/network/interfaces < /home/pi/BierBot/sys/interfaces
 
 echo installing dependencies for backend...
 cd /home/pi/BierBot/server
-sudo npm install
+sudo -u pi npm install
 
 echo inizializing backend...
 cd /home/pi/BierBot/server
