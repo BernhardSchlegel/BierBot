@@ -1,0 +1,236 @@
+<div ng-controller="AutomaticController as autoCtrl">
+   <h2>{{'NAV_AUTO' | translate}}</h2>
+   <div class="col-md-4" ng-hide="recipe != null || $scope.loaeded == false">
+      {{ 'AUTO_NOTLOADED_1' | translate }} <a href="#/recipes"><span class="glyphicon glyphicon glyphicon-book"></span> {{'NAV_RECIPES' | translate}}</a>
+      {{ 'AUTO_NOTLOADED_2' | translate }} <span class="glyphicon glyphicon-chevron-down"></span>
+      {{ 'AUTO_NOTLOADED_3' | translate }}
+      <button type="button" ng-disabled="recipeLoaded" class="btn btn-primary btn-sm"> <span class="glyphicon glyphicon-play"></span> {{ 'RECIPES_BREW' | translate}}</button>
+      {{ 'AUTO_NOTLOADED_4' | translate }}
+   </div>
+   <div ng-show="recipe != null">
+      <div class="row" ng-show="recipe.started == null">
+         <div class="col-xs-5 col-sm-4 col-md-2 col-lg-2 ">
+            <!-- Button group not started -->
+            <div class="input-group">
+               <input type="text" class="form-control" ng-model="settings.defaultSudSize" / aria-describedby="litres-addon">
+               <span class="input-group-addon" id="litres-addon">l</span>
+            </div>
+         </div>
+         <div class="col-xs-7 col-sm-4 col-md-4 col-lg-4 btn-group all-space-outer-b">
+            <select class="form-control " ng-model="selectedHardware" ng-change="updateSelectedHardware()" ng-options="hw.name for hw in hardwares">
+            </select>
+         </div>
+      </div>
+      <div class="row" ng-show="recipe.started == null">
+         <div class="col-xs-12 col-sm-8 col-md-4 col-lg-4 btn-group all-space-outer-b">
+            <div class="input-group">
+               <span class="btn-group">
+                  <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalRecipe" ng-click="startAuto()">
+                     <span class="glyphicon glyphicon-play"></span> {{ 'AUTO_START' | translate }}
+                  </button>
+                  <button type="button" class="btn btn-default" ng-click="abortAuto()">
+                     <span class="glyphicon glyphicon-remove"></span> {{ 'ABORT' | translate }}
+                  </button>
+               </span>
+            </div>
+         </div>
+      </div>
+
+      <div class="row" ng-show="recipe.started != null">
+         <div class="col-xs-12 col-sm-8 col-md-4 col-lg-4 btn-group all-space-outer-b">
+            <div class="input-group" role="group" ng-hide="recipe.started == null">
+               <div class="btn-group">
+                  <button type="button" class="btn btn-default" ng-click="setNextStepRequest()">
+                     <span class="glyphicon glyphicon-step-forward"></span> {{ 'AUTO_NEXT' | translate }}
+                  </button>
+                  <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalReally">
+                     <span class="glyphicon glyphicon-stop"></span> {{ 'AUTO_STOP' | translate }}
+                  </button>
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <div class="row">
+         <div class="col-sm-12 col-md-6">
+            <div class="panel panel-default all-space-inner" ng-show="currentStep.started">
+               <table class="table table-bordered table-compact">
+
+                  <tbody>
+                     <tr ng-show="recipe.mode == 'heat'">
+                        <td>{{ 'SUDNUMBER' | translate }}</td>
+                        <td>{{recipe.sudNumber}}</td>
+                     </tr>
+                     <tr>
+                        <td>{{ 'AUTO_RECIPESTARTED' | translate }}</td>
+                        <td>{{recipe.started | date : 'dd.MM.yyyy HH:mm:ss' }}</td>
+                     </tr>
+                     <tr>
+                        <td>{{ 'AUTO_STEPSTARTED' | translate }}</td>
+                        <td>{{currentStep.started | date : 'HH:mm:ss' }}</td>
+                     </tr>
+                     <tr ng-show="currentStep != null && currentStep.endStepBy == 'time'">
+                        <td>{{ 'AUTO_TEMPREACHED' | translate }}</td>
+                        <td ng-hide="estimated">{{currentStep.tempReached | date : 'HH:mm:ss' }}</td>
+                        <td ng-show="estimated">{{estimatedTempReached | date : 'HH:mm:ss' }} (est.)</td>
+                     </tr>
+                     <tr ng-show="currentStep != null && currentStep.endStepBy == 'time'">
+                        <td>{{ 'AUTO_STEPFINISHED' | translate }}</td>
+                        <td ng-hide="estimated">{{stepEstFinish | date : 'HH:mm:ss' }}</td>
+                        <td ng-show="estimated">{{stepEstFinish | date : 'HH:mm:ss' }} (est.)</td>
+                     </tr>
+                     <tr ng-show="currentStep != null && currentStep.endStepBy == 'time'">
+                        <td>{{ 'AUTO_TIMEREMAINING' | translate }}</td>
+                        <td ng-hide="estimated">{{remainingTime}}</td>
+                        <td ng-show="estimated">{{remainingTime}} (est.)</td>
+                     </tr>
+                     <tr>
+                        <td>{{ 'AUTO_CURTEMP' | translate }}</td>
+                        <td>{{temp1 | number : 1}}°C</td>
+                     </tr>
+                     <tr>
+                        <td>{{ 'TTEMP' | translate }}</td>
+                        <td>{{currentStep.targetTemperature | number : 1}}°C</td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+         </div>
+      </div>
+
+      <div class="row">
+         <div class="col-sm-12 col-md-6">
+            <div class="panel panel-default">
+               <div class="panel-heading" style="position:relative;">
+                  <h3 class="panel-title">
+                     {{ 'TEMPERATUREHISTORY' | translate }}
+                  </h3>
+               </div>
+               <div class="panel-body">
+                  <div ng-controller="ChartController" class="chart-spacer">
+                     <nvd3-line-chart height="250" data="chartData" objectequality="true" showXAxis="true" showYAxis="true" tooltips="true" xAxisTickFormat="xAxisTickFormatFunction()" interactive="true">
+                     </nvd3-line-chart>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <div class="row">
+         <div class="col-sm-12 col-md-6">
+            <recipe></recipe>
+         </div>
+      </div>
+
+      <div class="row">
+         <div class="col-sm-12 col-md-6">
+            <div class="panel panel-default">
+               <div class="panel-heading" style="position:relative;">
+                  <h3 class="panel-title">
+                     {{ 'AUTO_LOGS' | translate}}
+                  </h3>
+               </div>
+               <div class="panel-body">
+                  <table class="table table-bordered table-condensed">
+
+                     <tbody>
+                        <tr ng-repeat="comment in recipe.logs.comments">
+                           <td class="table-comment-label">{{comment[0]| date : 'dd.MM.yyyy HH:mm:ss' }}</td>
+                           <td class="table-comment-value">{{comment[1]}}</td>
+                        </tr>
+                     </tbody>
+                  </table>
+                  <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalComment">
+                     <span class="glyphicon glyphicon-plus"></span> {{ 'AUTO_LOG' | translate }}
+                  </button>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+
+
+   <!-- Modal really -->
+   <div class="modal fade" id="modalReally" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+         <div class="modal-content">
+            <div class="modal-header">
+               <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">{{ 'CLOSE' | translate}}</span></button>
+               <h4 class="modal-title" id="myModalLabel">{{ 'SURE' | translate}}</h4>
+            </div>
+            <div class="modal-body">
+               {{ 'AUTO_ABORTREALLY' | translate}}
+            </div>
+            <div class="modal-footer">
+               <button type="button" class="btn btn-success" data-dismiss="modal">{{ 'NO' | translate}}</button>
+               <button type="button" class="btn btn-primary btn-danger" data-dismiss="modal" ng-click="stopAuto()">{{ 'YES' | translate}}</button>
+            </div>
+         </div>
+      </div>
+   </div>
+
+
+   <!-- Modal really -->
+   <div class="modal fade" id="modalProcessfinished" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+         <div class="modal-content">
+            <div class="modal-header">
+               <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">{{ 'CLOSE' | translate}}</span></button>
+               <h4 class="modal-title" id="myModalLabel">{{ 'ALERT_PROCESS_COMPLETED' | translate}}</h4>
+            </div>
+            <div class="modal-body">
+               <div>{{ 'AUTO_SHARE' | translate}}</div>
+               </br>
+               <a href="https://www.facebook.com/sharer/sharer.php?sdk=joey&u=https%3A%2F%2Fwww.facebook.com%2FBierBot-497817260396218%2F" target="_blank">
+                  <button type="button" class="btn btn-facebook btn-sm">
+                     <span class="fa fa-facebook"></span> {{ 'SOCIAL_FACEBOOK' | translate}}
+                  </button>
+               </a>
+
+               <a href="https://twitter.com/intent/tweet?hashtags=craft%2Cbier%2Cheimbrau&original_referer=https%3A%2F%2Fabout.twitter.com%2Fde%2Fresources%2Fbuttons&ref_src=twsrc%5Etfw&text=Sud%20abgeschlossen!&tw_p=tweetbutton&url=bierbot.com&via=derBierBot"
+                  target="_blank">
+                  <button type="button" class="btn btn-twitter btn-sm">
+                     <span class="fa fa-twitter"></span> {{ 'SOCIAL_TWITTER' | translate}}
+                  </button>
+               </a>
+
+               <a href="https://plus.google.com/share?url=bierbot.com" target="_blank">
+                  <button type="button" class="btn btn-google btn-sm">
+                     <span class="fa fa-google-plus"></span> {{ 'SOCIAL_GPLUS' | translate}}
+                  </button>
+               </a>
+            </div>
+            <div class="modal-footer">
+               <button type="button" class="btn btn-primary" data-dismiss="modal">{{ 'CLOSE' | translate}}</button>
+            </div>
+         </div>
+      </div>
+   </div>
+
+   <!-- Modal add comment -->
+   <div class="modal fade" id="modalComment" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+         <div class="modal-content">
+            <div class="modal-header">
+               <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">{{ 'CLOSE' | translate}}</span></button>
+               <h4 class="modal-title" id="myModalLabel">{{ 'AUTO_ADDCOMMENT' | translate }}</h4>
+            </div>
+            <div class="modal-body">
+               <form name="settingsForm" class="form-horizontal" role="form" novalidate ng-en>
+
+                  <!-- Name -->
+                  <div class="form-group">
+                     <div class="spacer-rl">
+                        <input type="text" class="form-control" ng-model="newComment">
+                     </div>
+                  </div>
+               </form>
+            </div>
+            <div class="modal-footer">
+               <button type="button" class="btn " data-dismiss="modal">{{ 'ABORT' | translate}}</button>
+               <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="requestAddComment()">OK</button>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>

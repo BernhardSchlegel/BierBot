@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+	<title>BierBot</title>
+	<link rel="stylesheet" href="/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/css/font-awesome.min.css">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+
+
+    <!-- web app -->    
+    <meta name="apple-mobile-web-app-title" content="BierBot {{bierBotName}}" />
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="shortcut icon" sizes="192x192" href="icon/brewicon_192x192.png">
+    <link rel="apple-touch-icon" href="icon/brewicon_apple_192x192.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="icon/brewicon_apple_72x72.png" />
+    <link rel="apple-touch-icon" sizes="114x114" href="icon/brewicon_apple_114x114.png"/>
+    <link rel="apple-touch-icon" sizes="144x144" href="icon/brewicon_apple_144x144.png" />
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+ 			<div class="col-xs-12 col-sm-6 col-md-5 col-lg-3">
+				<h2>BierBot Login</h2>
+
+				<% if (message.length > 0) { %>
+					<div class="alert alert-danger"><%= message %></div>
+				<% } %>
+
+				<!-- LOGIN FORM -->
+				<form action="/login" method="post">
+					<div class="form-group" style="display:none;">
+						<label>Benutzer</label>
+						<input type="text" class="form-control" name="username" value="bierbot">
+					</div>
+					<div class="input-group">
+						<input type="password" class="form-control" name="password" placeholder="Passwort">
+				      <span class="input-group-btn">
+						<button type="submit" class="btn btn-primary">Login</button>
+				      </span>
+				    </div><!-- /input-group -->
+					<div style="margin-top: 15px; padding: 7px;" class="alert alert-info" role="alert">Standardpasswort ist: "bierbot123" (ohne "")</div>
+				</form>
+
+			</div>
+		</div>
+	</div>
+</body>
+</html>

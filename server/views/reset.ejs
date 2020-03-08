@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+<head>
+	<!--meta http-equiv="refresh" content="1"-->
+	<title>BierBot Reset</title>
+	<link rel="stylesheet" href="/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/css/font-awesome.min.css">
+
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+
+
+	<!-- web app -->    
+	<meta name="apple-mobile-web-app-title" content="BierBot Reset" />
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<link rel="shortcut icon" sizes="192x192" href="icon/brewicon_192x192.png">
+	<link rel="apple-touch-icon" href="icon/brewicon_apple_192x192.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="icon/brewicon_apple_72x72.png" />
+	<link rel="apple-touch-icon" sizes="114x114" href="icon/brewicon_apple_114x114.png"/>
+	<link rel="apple-touch-icon" sizes="144x144" href="icon/brewicon_apple_144x144.png" />
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-sm-6 col-md-5 col-lg-3">
+
+				<%
+				setTimeout(function() {
+					step = 1;
+				}, timeout);
+				%>
+
+				<h1></span>Reset</h1>
+
+
+				<div class="alert alert-danger"><%= warn %></div>
+
+
+				<% if (step == 1) { %>
+				<p><%= manual %></p>
+				<ol>
+					<li><%= step1 %></li>
+					<li><%= step2 %></li>
+					<li><%= step3 %></li>
+				</ol>
+
+				<form action="/resetStart" method="post" class="form-inline">
+					<button type="submit" class="btn btn-warning btn-md"><%= s1Btn %></button>
+				</form>
+				<% } %>
+
+
+				<% if (step == 2) { %>
+				<p><%= s2Desc %></p>
+
+				<script>
+					setTimeout(function() {
+						window.location = window.location.href;
+					},<%= duration%> * 1000);
+				</script>
+				<% } %>
+
+
+				<% if (step == 3) { %>
+				<form action="/resetFinalize" method="post" class="form-inline">
+					<div class="form-group">
+						<label><%= s3Desc %></label>
+						<input type="number" class="form-control" name="clickCount">
+					</div>
+					<button type="submit" class="btn btn-warning btn-md"><%= s3Btn %></button>
+				</form>
+
+				<script>
+					setTimeout(function() {
+						window.location = window.location.href;
+					}, (<%= timeout %> - <%= duration%>) * 1000);
+				</script>
+				<% } %>
+
+
+				<% if (warnMsg != null) { %>
+				<p><%= warnMsg %></p>
+				<script>
+					setTimeout(function() {
+						window.location = "reset";
+					},5000);
+				</script>
+				<% } %>
+			</div>
+
+		</div>
+	</div>
+</div>
+</body>
+</html>

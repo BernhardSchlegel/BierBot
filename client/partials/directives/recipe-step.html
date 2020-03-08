@@ -1,0 +1,43 @@
+<div>
+   <div class="recipe-step recipe-step-outer">
+      <div class="recipe-step recipe-step-temp">
+         <div class="recipe-step recipe-step-temp-inner">
+            <h3>{{ step.targetTemperature + '°C'}}</h3>
+         </div>
+      </div>
+      <div class="recipe-step recipe-step-details" ng-class="{'recipe-step-details-spaced': editView}">
+         <div class="recipe-step recipe-step-name">
+            {{step.name}}
+         </div>
+         <div class="recipe-step recipe-step-symbols">
+            <span class="label pull-left label-primary" ng-show="step.endStepBy == 'never'">
+               {{'MANUAL' | translate}}
+               <span class="glyphicon glyphicon glyphicon-hand-up"></span>
+            </span>
+            <span class="label pull-left label-success" ng-show="step.endStepBy == 'time'">
+               {{'TIME' | translate}} {{ Math.floor(step.timeLimit/60) + ':'}}{{step.timeLimit%60 | numberFixedLen:2}}h
+               <span class="glyphicon glyphicon glyphicon-time"></span>
+            </span>
+            <span ng-show="step.stirr == true" class="label label-default pull-left">
+               {{'STIRRING' | translate}}
+               <span class="glyphicon glyphicon glyphicon glyphicon-repeat"></span>
+            </span>
+         </div>
+      </div>
+      <div class="recipe-step recipe-step-edit" ng-show="editView">
+         <div class="recipe-step recipe-step-edit-controls btn-group" ng-show="editView">
+            <button type="button" class="btn btn-default btn-sm" ng-click="setEditedStep(recipe,step)" data-toggle="modal" data-target="#modalStep">
+               <span class="glyphicon glyphicon-pencil"></span>
+            </button>
+            <!-- delete step button -->
+            <button type="button" class="btn btn-default btn-sm" ng-click="setAlertMessage('MODAL_RECIPESTEP_DELETE_REALLY');setEditedStep(recipe,step);" data-toggle="modal" data-target="#modalReally">
+               <span class="glyphicon glyphicon-trash"></span>
+            </button>
+
+            <button data-as-sortable-item-handle type="button" class="btn btn-default btn-sm" ng-mouseenter="setEditedStep(recipe,step)">
+               <span class="glyphicon glyphicon-align-justify"></span>
+            </button>
+         </div>
+      </div>
+   </div>
+</div>

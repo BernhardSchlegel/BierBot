@@ -1,0 +1,47 @@
+<div class="panel panel-default" ng-mouseover="setEditedRecipe(recipe);">
+   <div class="panel-heading" style="position:relative;">
+      <h3 class="panel-title">
+         {{recipe.name}}
+         <span ng-show="recipe.mode == 'heat'" class="glyphicon glyphicon-fire"></span>
+         <span ng-show="recipe.mode == 'cool'" class="glyphicon glyphicon-asterisk"></span>
+      </h3>
+      <button type="button" class="btn no-border transparent btn-default" style="position:absolute;right:2px;top:2px;" ng-show="editView" ng-click="recipe.expanded = !recipe.expanded;">
+         <span ng-class="{'glyphicon glyphicon-chevron-down':!recipe.expanded, 'glyphicon glyphicon-chevron-up':recipe.expanded}"></span>
+      </button>
+   </div>
+
+   <div class="panel-body" ng-show="recipe.expanded">
+      <p ng-show="editView" style="white-space: pre-line; max-width:100%;word-wrap: break-word;">{{recipe.description}}</p>
+
+      <div ng-show="editView" style="margin-bottom:10px;">
+         <div class="btn-group">
+            <a href="#/automatic" ng-disabled="recipeLoaded || recipe.steps.length == 0" class="btn btn-primary btn-sm" href="#/automatic" ng-click="loadRecipe(recipe)">
+               <span class="glyphicon glyphicon-play"></span> {{'BREW' | translate}}
+            </a>
+            <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#modalRecipe" ng-click="setEditedRecipe(recipe)">
+               <span class="glyphicon glyphicon-pencil"></span> {{'EDIT' | translate}}
+            </button>
+            <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#modalStep" ng-click="setEditedRecipe(recipe);createNewStepAndEdit()">
+               <span class="glyphicon glyphicon-asterisk"></span> {{'ADD' | translate}}
+            </button>
+            <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#modalRecipe" ng-click="duplicateRecipe(recipe)">
+               <span class="glyphicon glyphicon-share"></span> {{'DUPLICATE' | translate}}
+            </button>
+
+            <a href="{{'/secure/recipejson/' + recipe._id}}" target="_blank" class="no-hover btn btn-default btn-sm">
+               <span class="glyphicon glyphicon glyphicon-download"></span>
+               <span>{{'EXPORT' | translate}}</span>
+            </a>
+            <button type="button" ng-click="setAlertMessage('MODAL_RECIPE_DELETE_REALLY');setEditedRecipe(recipe);" class="btn btn-default btn-sm" data-toggle="modal" data-target="#modalReally">
+               <span class="glyphicon glyphicon-trash"></span>
+            </button>
+         </div>
+      </div>
+
+      <ul class="list-group" data-as-sortable="dragControlListeners" data-ng-model="recipe.steps" is-enabled="true">
+         <li class="list-group-item clearfix" data-ng-repeat="step in recipe.steps" data-as-sortable-item style="overflow: hidden;position: relative;" ng-class="{'active':($index) == recipe.currentStep}">
+            <recipe-step></recipe-step>
+         </li>
+      </ul>
+   </div>
+</div>

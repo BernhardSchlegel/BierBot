@@ -1,0 +1,457 @@
+<h2>{{'NAV_SETTINGS' | translate}}</h2>
+
+<div ng-show="dataReceived">
+
+   <form name="settingsForm" class="form-horizontal" role="form" novalidate="" ng-en>
+
+      <h4>{{'SETTINGS_LANG_H' | translate}}</h4>
+      <div class="form-group">
+         <label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 brew">{{'SETTINGS_LANG_LANG' | translate}}</label>
+         <div class="col-xs-12 col-sm-4 col-md-2 col-lg-2 ">
+            <select class="form-control" name="repeatSelectLang" ng-model="settings.languageKey" ng-change="changeLanguage()">
+               <option ng-repeat="option in supportedLanguages" value="{{option.key}}">{{option.name}}</option>
+            </select>
+         </div>
+         <label class="col-xs-12 col-sm-5 col-md-4 col-lg-4  brew settings-description">{{'SETTINGS_LANG_LANGDESC' | translate}}
+         </label>
+      </div>
+      <h4>{{'SETTINGS_GENERAL' | translate}}</h4>
+
+      <div class="form-group">
+         <label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 brew">{{'SETTINGS_MOTORV' | translate}}</label>
+         <div class="col-xs-12 col-sm-9 col-md-6 col-lg-6 alert alert-danger" role="alert" ng-show="settingsForm.motorWarningChecked != true" ng-hide="settings.motorWarningChecked == true">
+            <h4>
+               <span class="glyphicon glyphicon-exclamation-sign"></span>
+               {{'SETTINGS_MOTORV_PRE_WRN' | translate}}
+            </h4>
+
+            <p>{{'SETTINGS_MOTORV_PRE_TEXT' | translate}}</p>
+            <a href="https://bierbot.de/blog/motoren">{{'SETTINGS_MOTORV_PRE_LINKTEXT' | translate}}</a>
+            <div class="checkbox">
+               <label><input type="checkbox" ng-model="settings.motorWarningChecked" ng-change="settings.voltsMotorCalibValue = 12">{{'SETTINGS_MOTORV_PRE_BTN' | translate}}</label>
+            </div>
+         </div>
+
+         <div class="col-xs-12 col-sm-4 col-md-2 col-lg-2 " ng-hide="settings.motorWarningChecked != true">
+            <input type="number" name="volts" min=8 max=24 class="form-control" ng-min="8" ng-max="24" ng-class="{ 'has-error': settingsForm.volts.$invalid }" ng-model="settings.voltsMotorCalibValue" required>
+            <span class="help-block" ng-show="settingsForm.volts.$error.max || settingsForm.volts.$error.min || settingsForm.volts.$error.required || settingsForm.volts.$error.ngMin || settingsForm.volts.$error.ngMax">
+               {{'SETTINGS_VAVLIDVOLTSPLEASE' | translate}}
+            </span>
+         </div>
+         <label class="col-xs-12 col-sm-5 col-md-4 col-lg-4  brew settings-description" ng-hide="settings.motorWarningChecked != true">{{'SETTINGS_MOTORVDESC' | translate}}
+            <div class="alert alert-danger" role="alert">
+               <h4><span class="glyphicon glyphicon-exclamation-sign"></span> {{'WARNING' | translate}}</h4>
+               <p>{{'SETTINGS_MOTORVWARN' | translate}}</p>
+               <a href="https://bierbot.de/blog/motoren">{{'SETTINGS_MOTORV_PRE_LINKTEXT' | translate}}</a>
+            </div>
+         </label>
+      </div>
+
+      <div class="form-group">
+         <label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 brew">{{'SETTINGS_BOILINGTHRESHOLD' | translate}}</label>
+         <div class="col-xs-12 col-sm-4 col-md-2 col-lg-2 ">
+            <input type="number" name="boilingthresold" min=90 max=110 class="form-control" ng-min="90" ng-max="110" ng-class="{ 'has-error': settingsForm.boilingthresold.$invalid }" ng-model="settings.boilingTempC" required>
+            <span class="help-block"
+               ng-show="settingsForm.boilingthresold.$error.max || settingsForm.boilingthresold.$error.min || settingsForm.boilingthresold.$error.required || settingsForm.boilingthresold.$error.ngMin || settingsForm.boilingthresold.$error.ngMax">
+               {{'SETTINGS_BOILINGTHRESHOLDVALIDNUMBERPLEASE' | translate}}
+            </span>
+         </div>
+         <label class="col-xs-12 col-sm-5 col-md-4 col-lg-4  brew settings-description">{{'SETTINGS_BOILINGTHRESHOLDDESC' | translate}}
+         </label>
+      </div>
+
+      <div class="form-group">
+         <label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 brew">{{'SETTINGS_DEFAULTSUDSIZE' | translate}}</label>
+         <div class="col-xs-12 col-sm-4 col-md-2 col-lg-2 ">
+            <input type="number" name="sudsize" min=0 max=110 class="form-control" ng-min="1" ng-max="5000" ng-class="{ 'has-error': settingsForm.sudsize.$invalid }" ng-model="settings.defaultSudSize" required>
+            <span class="help-block" ng-show="settingsForm.sudsize.$error.max || settingsForm.sudsize.$error.required || settingsForm.sudsize.$error.ngMin">
+               {{'SETTINGS_DEFAULTSUDSIZENUMBERPLEASE' | translate}}
+            </span>
+         </div>
+         <label class="col-xs-12 col-sm-5 col-md-4 col-lg-4  brew settings-description">{{'SETTINGS_DEFAULTSUDSIZEDESC' | translate}}
+         </label>
+      </div>
+
+      <div class="form-group">
+         <label class="col-xs-12 col-sm-3 col-md-2 col-lg-2  brew">{{'SETTINGS_NEXTSUDNUM' | translate}}</label>
+         <div class="col-xs-12 col-sm-4 col-md-2 col-lg-2 ">
+            <input type="number" ng-min="0" ng-max="9999999" name="sudnum" min=0 max=9999999 class="form-control" ng-model="settings.sudNumber" required ng-required="true">
+            <span class="help-block" ng-show="settingsForm.sudnum.$error.max || settingsForm.sudnum.$error.required || settingsForm.sudnum.$error.ngMin">
+               {{'SETTINGS_SUDNUMPLEASE' | translate}}
+            </span>
+         </div>
+         <label class="col-xs-12 col-sm-5 col-md-4 col-lg-4  brew settings-description">{{'SETTINGS_NEXTSUDNUMDESC' | translate}}</label>
+      </div>
+
+      <div class="form-group">
+         <label class="col-xs-12 col-sm-3 col-md-2 col-lg-2  brew">{{'SETTINGS_BIERBOTNAME' | translate}}</label>
+         <div class="col-xs-12 col-sm-4 col-md-2 col-lg-2 ">
+            <input type="text" name="bbname" class="form-control" ng-model="settings.bierBotName" ng-class="{ 'has-error': settingsForm.volts.$invalid }" required>
+            <span class="help-block" ng-show="settingsForm.bbname.$error.required">
+               {{'SETTINGS_NAMEPLEASE' | translate}}
+            </span>
+         </div>
+         <label class="col-xs-12 col-sm-5 col-md-4 col-lg-4  brew settings-description">{{'SETTINGS_BIERBOTNAMEDESC' | translate}}</label>
+      </div>
+
+
+      <div class="form-group">
+         <label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 brew">{{'SETTINGS_ADD_TO_SENSORVAL' | translate}}</label>
+         <div class="col-xs-12 col-sm-4 col-md-2 col-lg-2 ">
+            <input type="number" name="addToSensorVal" class="form-control" min="-5" max="5" ng-class="{ 'has-error': settingsForm.addToSensorVal.$invalid }" ng-model="settings.addToSensorVal" required>
+            <span class="help-block" ng-show="settingsForm.addToSensorVal.$error.max || settingsForm.addToSensorVal.$error.required || settingsForm.addToSensorVal.$error.ngMin">
+               {{'SETTINGS_ADD_TO_SENSORVAL_VALIDPLEASE' | translate}}
+            </span>
+         </div>
+         <label class="col-xs-12 col-sm-5 col-md-4 col-lg-4  brew settings-description">{{'SETTINGS_ADD_TO_SENSORVAL_DESC' | translate}}
+         </label>
+      </div>
+
+      <h4 ng-show="bierBotState.wifiAvailable">{{'SETTINGS_INTERFACE_HEADER' | translate}}</h4>
+      <div class="form-group" ng-show="bierBotState.wifiAvailable">
+         <label class="col-xs-12 col-sm-3 col-md-2 col-lg-2  brew">{{'SETTINGS_INTERFACE' | translate}}</label>
+         <div class="col-xs-12 col-sm-4 col-md-2 col-lg-2 ">
+            <input type="checkbox" ng-change="pendingChanges = true; updateWifiList();" ng-model="settings.wifiEnabled"> {{'ACTIVATE' | translate}}
+         </div>
+         <label class="col-xs-12 col-sm-5 col-md-4 col-lg-4  brew settings-description">
+            {{'SETTINGS_INTERFACEDESC' | translate}}
+         </label>
+      </div>
+      <div class="form-group" ng-show="settings.wifiEnabled && bierBotState.wifiAvailable">
+         <label class="col-xs-12 col-sm-3 col-md-2 col-lg-2  brew">{{'SETTINGS_WLANSSID' | translate}}</label>
+         <div class="col-xs-12 col-sm-4 col-md-2 col-lg-2 ">
+            <span ng-show="scanningForWifi" class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
+            <select ng-hide="scanningForWifi" class="form-control" name="wifiSelect" id="wifiSelect" ng-model="settings.wlanSSID" ng-change="settings.wlanPassphrase = ''" ng-init="settings.wlanSSID = networks[0]">
+               <option value="" selected hidden />
+               <option ng-repeat="network in networks track by $index">{{network}}</option>
+            </select>
+            <!--input type="text" min=0 max=1024 class="form-control" ng-model="settings.wlanSSID"-->
+         </div>
+         <label class="col-xs-12 col-sm-5 col-md-4 col-lg-4  brew settings-description">{{'SETTINGS_WLANSSIDDESC' | translate}}</label>
+      </div>
+
+
+      <div class="form-group" ng-show="settings.wifiEnabled && bierBotState.wifiAvailable">
+         <label class="col-xs-12 col-sm-3 col-md-2 col-lg-2  brew">{{'SETTINGS_WLANPW' | translate}}</label>
+         <div class="col-xs-12 col-sm-4 col-md-2 col-lg-2 ">
+            <input type="password" min=0 max=1024 class="form-control" ng-model="settings.wlanPassphrase">
+         </div>
+         <label class="col-xs-12 col-sm-5 col-md-4 col-lg-4  brew settings-description">{{'SETTINGS_WLANPWDESC' | translate}}</label>
+      </div>
+
+      <h4>{{'SETTINGS_HW' | translate}}</h4>
+      <div class="form-group">
+         <label class="col-xs-12 col-sm-3 col-md-2 col-lg-2  brew">{{'SETTINGS_HWSETUP' | translate}}</label>
+         <div class="col-xs-12 col-sm-4 col-md-2 col-lg-2 ">
+            <select class="form-control" ng-model="selectedHardware" ng-change="selectValueChanged()" ng-options="hw.name for hw in hardwares"></select>
+            <div class="btn-group pull-right">
+               <!-- edit step button -->
+               <button type="button" class="btn btn-default btn-sm" ng-click="setWindowTitle('SETTINGS_HWADDNEW');editHardware(null);" data-toggle="modal" data-target="#modalHardware">
+                  <span class="glyphicon glyphicon-asterisk"></span>
+               </button>
+               <!-- edit step button -->
+               <button type="button" class="btn btn-default btn-sm" ng-click="setWindowTitle('SETTINGS_HWEDIT');editHardware(selectedHardware);" data-toggle="modal" data-target="#modalHardware">
+                  <span class="glyphicon glyphicon-pencil"></span>
+               </button>
+               <!-- delete step button -->
+               <button ng-disabled="hardwares.length == 1" type="button" class="btn btn-default btn-sm" ng-click="setAlertMessage('MODAL_DELETE_HARDWARE');" data-toggle="modal" data-target="#modalReally">
+                  <span class="glyphicon glyphicon-trash"></span>
+               </button>
+            </div>
+         </div>
+
+         <label class="col-xs-12 col-sm-5 col-md-4 col-lg-4  brew settings-description">
+            {{'SETTINGS_HWDESC' | translate}}
+         </label>
+      </div>
+
+      <!--h4>{{'SETTINGS_DATE' | translate}}</h4>
+
+
+    <div class="form-group">
+        <label class="col-xs-12 col-sm-3 col-md-2 col-lg-2  brew" >{{'SETTINGS_DATEMANUAL' | translate}}</label>
+        <div class="col-xs-12 col-sm-4 col-md-2 col-lg-2 ">
+            <input type="checkbox" ng-change="pendingChanges = true;" ng-model="settings.manualSetTime"> {{'ACTIVATE' | translate}}
+        </div>
+        <label class="col-xs-12 col-sm-5 col-md-4 col-lg-4  brew settings-description">
+          {{'SETTINGS_DATEMANUALDESC' | translate}}
+        </label>
+    </div>
+
+    <div class="form-group" ng-show="settings.manualSetTime">
+        <label class="col-xs-12 col-sm-3 col-md-2 col-lg-2  brew" >{{'SETTINGS_CLOCK' | translate}}</label>
+        <div class="col-xs-12 col-sm-4 col-md-2 col-lg-2 ">
+          <div ng-controller="TimepickerCtrl">
+            <timepicker ng-model="mytime" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
+          </div>
+        </div>
+        <label class="col-xs-12 col-sm-5 col-md-4 col-lg-4  brew settings-description"></label>
+      </div-->
+
+      <div class="form-group" ng-show="settings.manualSetTime">
+         <label class="col-xs-12 col-sm-3 col-md-2 col-lg-2  brew">{{'SETTINGS_DATE' | translate}}</label>
+         <div class="col-xs-12 col-sm-4 col-md-2 col-lg-2 ">
+            <div ng-controller="DatepickerCtrl">
+               <p class="input-group">
+                  <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dt" is-open="status.opened" min-date="minDate" max-date="'2020-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)"
+                     ng-required="true" close-text="Close" />
+                  <span class="input-group-btn">
+                     <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                  </span>
+               </p>
+            </div>
+         </div>
+         <label class="col-xs-12 col-sm-5 col-md-4 col-lg-4  brew settings-description"></label>
+      </div>
+
+      <h4>{{'SETTINGS_PW' | translate}}</h4>
+
+      <div class="form-group">
+         <label class="col-xs-12 col-sm-3 col-md-2 col-lg-2  brew">{{'SETTINGS_PWPROTECT' | translate}}</label>
+         <div class="col-xs-12 col-sm-4 col-md-2 col-lg-2 ">
+            <input type="checkbox" ng-change="pendingChanges = true;" ng-model="settings.passwordActivated"> {{'ACTIVATE' | translate}}
+         </div>
+         <label class="col-xs-12 col-sm-5 col-md-4 col-lg-4  brew settings-description">
+            {{'SETTINGS_PWDESC' | translate}}
+         </label>
+      </div>
+
+      <div class="form-group" ng-show="settings.passwordActivated && pendingChanges === false">
+         <label class="col-xs-12 col-sm-3 col-md-2 col-lg-2  brew">{{'SETTINGS_PW' | translate}}</label>
+         <div class="col-xs-12 col-sm-4 col-md-2 col-lg-2 ">
+            <a class="btn btn-large btn-primary" href="../../../change/">{{'EDIT' | translate}}</a>
+         </div>
+         <label class="col-xs-12 col-sm-5 col-md-4 col-lg-4  brew settings-description">{{'SETTINGS_CHANGEDESC' | translate}}</label>
+      </div>
+
+
+      <h4>{{'SETTINGS_STATISTICS' | translate}}</h4>
+
+      <div class="form-group">
+         <label class="col-xs-12 col-sm-3 col-md-2 col-lg-2  brew">{{'SETTINGS_STATISTICS_ENALBE' | translate}}</label>
+         <div class="col-xs-12 col-sm-4 col-md-2 col-lg-2 ">
+            <input type="checkbox" ng-change="pendingChanges = true;" ng-model="settings.sendStatistics"> {{'ACTIVATE' | translate}}
+         </div>
+         <label class="col-xs-12 col-sm-5 col-md-4 col-lg-4  brew settings-description">
+            {{'SETTINGS_STATISTICS_ENALBEDESC' | translate}}
+         </label>
+      </div>
+
+
+      <h4>{{'SETTINGS_UPDATE' | translate}}</h4>
+      <div class="form-group" ng-hide="settings.updateAvailable">
+         <label class="col-xs-12 col-sm-12 col-md-8 col-lg-8  brew">
+            {{'SETTINGS_UPDATEUPTODATE' | translate}}
+         </label>
+      </div>
+      <div class="form-group" ng-show="settings.updateAvailable && brew != null">
+         <label class="col-xs-12 col-sm-12 col-md-8 col-lg-8  brew">
+            {{'SETTINGS_UPDATEAVAILABLE' | translate}}
+         </label>
+      </div>
+
+      <div class="form-group">
+         <label class="col-xs-12 col-sm-3 col-md-2 col-lg-2  brew">{{'SETTINGS_REBOOTMANUAL' | translate}}</label>
+         <div class="col-xs-12 col-sm-4 col-md-2 col-lg-2 ">
+
+            <div class="input-group">
+               <input type="text" ng-model="rebootcheck" class="form-control" placeholder="{{'SETTINGS_REBOOTPLACEHOLDER' | translate}}">
+               <span class="input-group-btn">
+                  <button class="btn btn-default" ng-class="{'disabled': rebootcheck != 'bierbot'}" type="button" ng-click="requestReboot()">{{'SETTINGS_REBOOTBTN' | translate}}</button>
+               </span>
+            </div><!-- /input-group -->
+         </div>
+         <label class="col-xs-12 col-sm-5 col-md-4 col-lg-4  brew settings-description">{{'SETTINGS_REBOOTMANUALDESC' | translate}}</label>
+      </div>
+
+
+      <div class="form-group">
+         <label class="col-xs-12 col-sm-3 col-md-2 col-lg-2  brew">{{'SETTINGS_RESET' | translate}}</label>
+         <div class="col-xs-12 col-sm-4 col-md-2 col-lg-2 ">
+            <a class="btn btn-default" href="../reset">Reset</a>
+         </div>
+         <label class="col-xs-12 col-sm-5 col-md-4 col-lg-4  brew settings-description">{{'SETTINGS_RESETDESC' | translate}}</label>
+      </div>
+
+      <div class="form-group" ng-show="settings.updateAvailable && brew == null">
+         <label class="col-xs-12 col-sm-3 col-md-2 col-lg-2  brew">Update</label>
+         <div class="col-xs-12 col-sm-4 col-md-2 col-lg-2 ">
+            <a class="btn btn-large btn-primary" ng-click="startUpdate()">{{'START' | translate}}</a>
+         </div>
+         <label class="col-xs-12 col-sm-5 col-md-4 col-lg-4  brew settings-description">
+            <div class="alert alert-danger" role="alert">
+               <span aria-hidden="true"></span>
+               <h4><span class="glyphicon glyphicon-exclamation-sign"></span> {{'IMPORTANT' | translate}}</h4>
+               {{'SETTINGS_STARTUPDATE' | translate}}
+            </div>
+
+         </label>
+      </div>
+
+      <!--code>settingsForm.$valid = {{settingsForm.$valid}}</code><br>
+  <code>settingsForm.$error = {{!!settingsForm.$error.required}}</code><br-->
+
+      <div class="form-group">
+         <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8" style="padding-bottom: 15px;">
+            <button type="button" ng-disabled="settingsForm.$invalid" class="btn btn-primary pull-right" data-dismiss="modal" ng-click="saveSettings()">{{'SAVE' | translate}}</button>
+         </div>
+      </div>
+
+   </form>
+
+   <div>
+      <small style="color:grey;">
+         <p style="margin-bottom:0;">{{'SETTINGS_SERIAL' | translate}}: {{settings.id}}</p>
+         <p style="margin-bottom:0;">{{'SETTINGS_SOFTWAREV' | translate}}: {{settings.version}}</p>
+         <p style="margin-bottom:0;">{{'SETTINGS_HWARDWAREREV' | translate}}: {{settings.hardwareRevision}}</p>
+         <p> <a href="https://github.com/BernhardSchlegel/BierBot/blob/master/LISCENSE.MD">Liscense</a>, 2014 - 2020, Bernhard Schlegel </p>
+      </small>
+   </div>
+</div>
+
+
+<!-- Modal for hardware -->
+<div class="modal fade" id="modalHardware" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">{{'CLOSE' | translate}}</span></button>
+            <h4 class="modal-title" id="myModalLabel">{{windowTitle}}</h4>
+         </div>
+         <div class="modal-body">
+            <form name="hardwareForm" class="form-horizontal" role="form" novalidate ng-en>
+
+               <!-- Name -->
+               <div class="form-group">
+                  <label class="col-sm-3 brew">{{'NAME' | translate}}</label>
+                  <div class="col-sm-8">
+                     <input type="text" class="form-control" ng-model="editedHardware.name">
+                  </div>
+               </div>
+
+               <!-- Beschreibung -->
+               <div class="form-group">
+                  <label class="col-sm-3 brew">{{'DESC' | translate}}</label>
+                  <div class="col-sm-8">
+                     <input type="text" class="form-control" ng-model="editedHardware.description.dede">
+                  </div>
+               </div>
+
+               <div class="form-group" ng-class="{'has-error': hardwareForm.StartHeatingOffsetLow.$invalid}">
+                  <label for="inputText3" class="col-sm-3 brew">{{'SETTINGS_HWHYSTERESIS' | translate}}</label>
+                  <div class="col-sm-5">
+                     <div class="input-group">
+                        <input type="text" class="form-control" id="StartHeatingOffsetLow" name="StartHeatingOffsetLow" ng-model="editedHardware.pd.hysteresis" smart-float />
+                        <span class="input-group-addon">°C</span>
+                     </div>
+
+                     <span class="help-block" ng-show="hardwareForm.StartHeatingOffsetLow.$error.float">
+                        {{'SETTINGS_COMMAPLEASE' | translate}}
+                     </span>
+
+                  </div>
+                  <label class="col-md-offset-3 col-sm-8 brew settings-description">
+                     {{'SETTINGS_HWHYSTERESISDESC' | translate}}
+                  </label>
+               </div>
+
+
+               <!-- Expertenmodus -->
+               <div class="form-group">
+                  <label class="col-sm-3 brew">{{'SETTINGS_HWEXPERTMODE' | translate}}</label>
+                  <div class="col-sm-5">
+                     <input type="checkbox" ng-model="editedHardware.pd.manual">
+                  </div>
+                  <label class="col-md-offset-3 col-sm-8 brew settings-description" ng-show="editedHardware.pd.manual" style="margin-top:15px;">
+                     <div class="alert alert-danger" role="alert">
+                        <span aria-hidden="true"></span>
+                        <h4><span class="glyphicon glyphicon-exclamation-sign"></span> {{'WARNING' | translate}}</h4>
+                        {{'SETTINGS_HWEXPERTMODEDESC' | translate}}
+                     </div>
+                  </label>
+                  <label class="col-md-offset-3 col-sm-8 brew settings-description" ng-show="editedHardware.pd.manual == false">
+                     {{'SETTINGS_PLEASEUSEEXPERTMODE' | translate}}
+                  </label>
+               </div>
+
+               <div class="form-group" ng-class="{'has-error': hardwareForm.StartHeatingOffsetLow.$invalid}" ng-show="editedHardware.pd.manual">
+                  <label for="inputText3" class="col-sm-3 brew">kp</label>
+                  <div class="col-sm-5">
+                     <div class="input-group">
+                        <input type="text" class="form-control" id="StartHeatingOffsetLow" name="StartHeatingOffsetLow" ng-model="editedHardware.pd.kp" smart-float />
+                     </div>
+
+                     <span class="help-block" ng-show="hardwareForm.StartHeatingOffsetLow.$error.float">
+                        {{'SETTINGS_COMMAPLEASE' | translate}}
+                     </span>
+
+                  </div>
+                  <label class="col-md-offset-3 col-sm-8 brew settings-description">{{'SETTINGS_HWKPDESC' | translate}}</label>
+               </div>
+
+               <div class="form-group" ng-class="{'has-error': hardwareForm.StartHeatingOffsetLow.$invalid}" ng-show="editedHardware.pd.manual">
+                  <label for="inputText3" class="col-sm-3 brew">kd</label>
+                  <div class="col-sm-5">
+                     <div class="input-group">
+                        <input type="text" class="form-control" id="StartHeatingOffsetLow" name="StartHeatingOffsetLow" ng-model="editedHardware.pd.kd" smart-float />
+                     </div>
+
+                     <span class="help-block" ng-show="hardwareForm.StartHeatingOffsetLow.$error.float">
+                        {{'SETTINGS_COMMAPLEASE' | translate}}
+                     </span>
+
+                  </div>
+                  <label class="col-md-offset-3 col-sm-8 brew settings-description">{{'SETTINGS_HWKDDESC' | translate}}</label>
+               </div>
+
+
+
+            </form>
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancelEdit()">{{'ABORT' | translate}}</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="finishEdit()">{{'SAVE' | translate}}</button>
+         </div>
+      </div>
+   </div>
+</div>
+
+
+<!-- Modal really -->
+<div class="modal fade" id="modalReally" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">{{'CLOSE' | translate}}</span></button>
+            <h4 class="modal-title" id="myModalLabel">{{'SURE' | translate}}</h4>
+         </div>
+         <div class="modal-body">
+            {{alertMessage}}
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-success" data-dismiss="modal">{{'NO' | translate}}</button>
+            <button type="button" class="btn btn-primary btn-danger" data-dismiss="modal" ng-click="deleteHardware()">{{'YES' | translate}}</button>
+         </div>
+      </div>
+   </div>
+</div>
+
+
+<!-- Modal reboot -->
+<div class="modal fade" id="modalReboot" tabindex="-1" role="dialog" aria-labelledby="myModalReboot" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">{{'CLOSE' | translate}}</span></button>
+            <h4 class="modal-title" id="myModalReboot">{{'SETTINGS_REBOOT' | translate}}</h4>
+         </div>
+         <div class="modal-body">
+            {{'SETTINGS_REBOOTDESC' | translate}}
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-success" data-dismiss="modal">{{'SETTINGS_REBOOTDESC_LATER' | translate}}</button>
+            <button type="button" class="btn btn-primary btn-danger" data-dismiss="modal" ng-click="requestReboot()">{{'SETTINGS_REBOOTDESC_NOW' | translate}}</button>
+         </div>
+      </div>
+   </div>
+</div>

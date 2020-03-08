@@ -24,8 +24,7 @@ sudo apt-get install git -y
 
 echo cloning repo into /home/pi/BierBot
 cd /home/pi
-git clone --depth=1 https://github.com/BernhardSchlegel/BierBot-PrivatePrepare.git
-mv BierBot-PrivatePrepare BierBot
+git clone --depth=1 https://github.com/BernhardSchlegel/BierBot.git
 
 echo installing bower...
 sudo npm install -g bower
@@ -52,7 +51,7 @@ echo installing dependencies for backend...
 cd /home/pi/BierBot/server
 sudo npm install
 
-echo patching dependencies..
+echo inizializing backend...
 cd /home/pi/BierBot/server
 sudo node setup.js
 
@@ -66,3 +65,4 @@ echo an error above is OK when you dont have an wifi adapter
 
 echo You may want to restart now: sudo restart -r now
 echo BierBot says: gut Sud!
+

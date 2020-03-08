@@ -1,0 +1,31 @@
+{
+  "name": "bierbot-client",
+  "homepage": "https://github.com/BernhardSchlegel/BierBot",
+  "authors": [
+    "Bernhard Schlegel <bernhard.schlegel@mytum.de>"
+  ],
+  "description": "Frontend for the BierBot Brewing software",
+  "main": "index.html",
+  "keywords": [
+    "beer",
+    "brewing"
+  ],
+  "license": "na",
+  "private": true,
+  "dependencies": {
+    "angular": "1.4.4",
+    "angular-route": "1.4.4",
+    "angular-cookies": "1.4.4",
+    "angular-translate": "2.7.2",
+    "angularjs-nvd3-directives": "0.0.7",
+    "moment": "2.8.3",
+    "nvd3": "1.1.15-beta",
+    "jquery": "1.11.1",
+    "angular-google-analytics": "1.1.9",
+    "ng-sortable": "^1.3.8"
+  },
+  "resolutions": {
+    "d3": "~3.4.1",
+    "angular": "1.4.4"
+  }
+}

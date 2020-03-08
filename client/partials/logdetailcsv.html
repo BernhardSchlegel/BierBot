@@ -1,0 +1,12 @@
+<div class="fullArea">
+   <div class="csv-button">
+      <a download="bierbot_log.csv" ng-href="{{ url }}">
+         <button type="button" class="btn btn-default btn-lg" aria-label="Left Align">
+            <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+            {{ 'LOGDETAILCSV_DOWNLOAD' | translate}}
+         </button>
+      </a>
+   </div>
+
+   <pre ng-bind-html="CSVstr"></pre>
+</div>

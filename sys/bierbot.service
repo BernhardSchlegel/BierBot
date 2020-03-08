@@ -1,0 +1,14 @@
+[Unit]
+Description=runs the BierBot server after startup
+After=network.target
+
+[Service]
+ExecStart=node /home/pi/BierBot/server/server.js
+WorkingDirectory=/home/pi/BierBot/server
+StandardOutput=inherit
+StandardError=inherit
+Restart=always
+User=root
+
+[Install]
+WantedBy=multi-user.target

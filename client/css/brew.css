@@ -1,0 +1,372 @@
+nav.navbar {
+  border-radius: 0 !important;
+  -moz-border-radius: 0 !important;
+}
+
+.vcenter {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+}
+
+.ng-invalid.ng-dirty {
+	border-color: #FA787E;
+}
+
+.ng-valid.ng-dirty {
+	border-color: #78FA89;
+}
+
+.btn.no-border {	
+  border: 0px solid transparent;
+}
+
+.btn.transparent {
+  background-color: transparent;
+}
+
+div.all-space-inner {
+	padding: 10px;
+}
+
+div.all-space-inner-tb {
+	padding-top: 15px;
+	padding-bottom: 15px;
+}
+
+div.all-space-outer-b {
+	margin-bottom: 15px;
+}
+
+div.chart-spacer {
+	margin-top:-40px;
+	margin-bottom:-35px;
+	height: 250px;
+}
+
+div.chart-spacer-detail {
+	margin-top:-40px;
+	margin-bottom:-35px;
+	height: 300px;
+}
+
+div.recipe.edit-mode {
+	margin-right:70px;
+}
+
+div.main-content {
+	max-width:500px;
+}
+
+span.title-temp {
+	font-size: 12px;
+	font-color: #EEEEEE !important;	
+}
+
+label.brew {
+  font-weight: normal !important;
+}
+
+li.current-step {
+	border: 10px solid black;
+}
+
+div.bottom-space {
+	margin-bottom: 10px;
+}
+
+img.header-icon {
+	margin-left: -3px;
+	margin-top: -3px;
+	padding-right: 2px;
+}
+
+a.navbar-brand:hover > img.header-icon {
+	-webkit-filter: brightness(115%)
+}
+
+div.fullArea {
+	z-index: 8500;
+	background-color: white;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	left: 0;
+	padding: 10px;
+}
+
+div.autoMode-label {
+	width: 200px;
+	float:left;
+	padding-left: 15px;
+}
+
+div.autoMode-value {
+}
+
+/* RECIPE STEP */
+div.recipe-step {
+}
+
+div.recipe-step-outer {
+    width: 100%;
+    position: absolute:
+}
+
+div.recipe-step-temp {
+	position: absolute;
+	left: 5px;
+	top: 0;
+	height: 100%;
+}
+
+div.recipe-step-temp-inner {
+	position: absolute;
+	top: 50%;
+	margin-top: -13px;
+	margin-left: 5px;
+	width: 75px;
+	height: 26px;
+	text-align: center;
+}
+
+div.recipe-step-details {
+    margin-left: 78px;
+}
+
+div.recipe-step-details-spaced {
+	margin-right: 98px;
+}
+
+div.recipe-step-name {
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+div.recipe-step-symbols {   
+	overflow: hidden; 
+}
+
+div.recipe-step-edit {
+	position: absolute;
+	right: 8px;
+	top: 0;
+	height: 100%;
+}
+
+div.recipe-step-edit-controls {
+	top: 50%;
+	margin-top: -16px;
+	width: 102px;
+	height: 32px;
+}
+
+div.recipe-step-temp h3{
+}
+
+div.recipe-step-symbols {
+}
+
+div.recipe-step-symbols span.label-primary,
+div.recipe-step-symbols span.label-success,
+div.recipe-step-symbols span.label-default {
+	margin-bottom: 5px;
+	margin-right: 5px;
+}
+
+div.recipe-step h3 {
+	margin: 0;	
+}
+
+/* logsection */
+a.no-hover {	
+	color: inherit;
+}
+
+a.no-hover:hover {
+	text-decoration: none;
+	color: inherit;
+}
+table.log-overview {
+	margin-bottom: 0;
+}
+div.logdetail {
+}
+
+div.logdetail-name {
+	
+}
+
+div.logdetail-field {
+}
+
+div.logdetail-value {
+
+}
+
+div.csv-button {
+	text-align: center;
+	margin-bottom: 9px;
+}
+
+div.spacer-rl {
+	margin-right: 15px;
+	margin-left: 15px;
+}
+
+td.table-comment-label {
+	width: 150px;
+}
+
+td.table-comment-value {
+
+}
+
+/* update */
+div.update-available {
+	z-index: 8000;
+	bottom: 15px;
+	left: 0px;
+	position: fixed;
+	text-align: right;
+}
+
+button.update-available {
+	border-bottom-left-radius: 0px;
+	border-top-left-radius: 0px;
+}
+
+/* feedback */
+div.feedback {
+	z-index: 8000;
+	bottom: 15px;
+	right: 0px;
+	position: fixed;
+	text-align: right;
+}
+
+#modalFeedback {
+	z-index: 9000;	
+}
+
+button.feedback {
+	width: 40px;
+	border-bottom-right-radius: 0px;
+	border-top-right-radius: 0px;
+}
+
+button.feedback:hover {
+	width: 100px;
+}
+
+span.feedback-text {
+	visibility: hidden;
+}
+
+button.feedback:hover span.feedback-text {
+	visibility: visible;
+}
+
+/* ALERTS */
+div.alert-canvas {
+	position: fixed;
+	z-index: 9999;
+	bottom: 0px;
+	text-align: center;
+	width: 100%;
+	padding-left: 15%;
+	padding-right: 15%;
+}
+
+div.alert-canvas-content {
+}
+
+/* DRAG N DROP */
+.span-3 {
+  width: 277px;
+}
+
+.form-group.btn {
+  border: 1px solid #cccccc;
+  border-top-radius: 4px;
+  border-bottom-radius: 0;
+  width: 208px !important;
+}
+
+.form-group, {
+  float: left;
+  clear: left;
+  width: 240px;
+}
+
+input.form-control {
+  margin-bottom: 0;
+  border-radius: 0;
+  border: 1px solid #cccccc;
+  padding-right: 20px;
+}
+.row .form-group:first-child input.form-control {
+  border-top: 1px solid #cccccc;
+  border-top-radius: 4px;
+}
+.row .form-group:last-child input.form-control {
+  border-bottom-radius: 4px;
+}
+.ng-repeat-reorder-parent, [ng-repeat-reorder]{
+	z-index: 10;
+	position: relative;
+}
+[ng-repeat-reorder].dragging{
+	z-index: 11;
+	position: absolute;
+  -webkit-box-shadow: 0px 0px 25px 2px rgba(0,0,0,0.75);
+-moz-box-shadow: 0px 0px 25px 2px rgba(0,0,0,0.75);
+box-shadow: 0px 0px 25px 2px rgba(0,0,0,0.75);
+}
+.form-group.dragging input {
+  border: 1px solid #cccccc;
+}
+.form-group.dragging-after input {
+  border-top: 1px solid #cccccc;
+}
+.form-group.dragging-before input {
+}
+
+.active-drag-below {
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+ /* Wifi */
+
+span.wifi-bars {
+	overflow : hidden;
+}
+
+/* loading spinner */
+.glyphicon-refresh-animate {
+    -animation: spin .7s infinite linear;
+    -webkit-animation: spin2 .7s infinite linear;
+}
+
+@-webkit-keyframes spin2 {
+    from { -webkit-transform: rotate(0deg);}
+    to { -webkit-transform: rotate(360deg);}
+}
+
+@keyframes spin {
+    from { transform: scale(1) rotate(0deg);}
+    to { transform: scale(1) rotate(360deg);}
+}
+
+/* status bar */
+.glyphicon-small {
+	font-size: 12px;
+}
+
+.glyphicon-disabled {
+	opacity: 0.4;
+}

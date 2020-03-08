@@ -1,0 +1,9 @@
+/logs/
+/server/node_modules/
+/client/bower_components/
+/update/
+beererr.log
+beerlog.log
+server/package-lock.json
+personal.txt
+/private/

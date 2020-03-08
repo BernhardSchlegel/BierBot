@@ -1,0 +1,261 @@
+<h2>{{'NAV_RECIPES' | translate}}</h2>
+
+<p>
+   <div class="btn-group">
+      <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalRecipe" ng-click="createNewRecipeAndEdit()">
+         <span class="glyphicon glyphicon-plus"></span> {{'NEW' | translate}}
+      </button>
+      <!--button type="button" class="btn btn-default"
+      data-toggle="modal" data-target="#modalJSONExport"
+      ng-click="allRecipesToJSON();">
+        <span class="glyphicon glyphicon-export"></span> {{'EXPORT' | translate}}
+      </button-->
+      <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalImport">
+         <span class="glyphicon glyphicon-upload"></span> {{'IMPORT' | translate}}
+      </button>
+      <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalImportBeerXML">
+         <span class="glyphicon glyphicon-upload"></span> {{'RECIPES_IMPORT_BEERXML' | translate}}
+      </button>
+   </div>
+</p>
+
+<div style="max-width:500px;" ng-repeat="recipe in recipes">
+   <recipe></recipe>
+</div>
+
+
+<!-- Modal really -->
+<div class="modal fade" id="modalReally" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">{{'CLOSE' | translate}}</span></button>
+            <h4 class="modal-title" id="myModalLabel">{{'SURE' | translate}}</h4>
+         </div>
+         <div class="modal-body">
+            {{alertMessage}}
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-success" data-dismiss="modal">{{'NO' | translate}}</button>
+            <button type="button" class="btn btn-primary btn-danger" data-dismiss="modal" ng-click="finishDelete()">{{'YES' | translate}}</button>
+         </div>
+      </div>
+   </div>
+</div>
+
+<!-- Modal really -->
+<div class="modal fade" id="modalJSONExport" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">{{'CLOSE' | translate}}</span></button>
+            <h4 class="modal-title" id="myModalLabel">JSON Export</h4>
+         </div>
+         <div class="modal-body">
+            <textarea rows="9" disabled="true" class="form-control">{{recipeJSON}}</textarea>
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-primary btn-default" data-dismiss="modal">{{'CLOSE' | translate}}</button>
+         </div>
+      </div>
+   </div>
+</div>
+
+<!-- Modal for recipe -->
+<div class="modal fade" id="modalRecipe" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">{{'CLOSE' | translate}}</span></button>
+            <h4 class="modal-title" id="myModalLabel">{{'RECIPES_MODALRECIPE_EDIT' | translate}}</h4>
+         </div>
+         <div class="modal-body">
+            <form name="settingsForm" class="form-horizontal" role="form" novalidate ng-en>
+
+               <!-- Name -->
+               <div class="form-group">
+                  <label class="col-sm-3 brew">{{'RECIPES_MODALRECIPE_NAME' | translate}}</label>
+                  <div class="col-sm-4">
+                     <input type="text" class="form-control" ng-model="editedRecipe.name">
+                  </div>
+               </div>
+
+               <!-- Beschreibung -->
+               <div class="form-group">
+                  <label class="col-sm-3 brew">{{'RECIPES_MODALRECIPE_DESC' | translate}}</label>
+                  <div class="col-sm-8">
+                     <textarea class="form-control" ng-model="editedRecipe.description" style="height:150px;">
+                </textarea>
+                  </div>
+               </div>
+
+               <!-- Modus -->
+               <div class="form-group">
+                  <label class="col-sm-3 brew" {{'CLOSE' | translate}}>Modus</label>
+                  <div class="col-sm-4">
+                     <div class="btn-group">
+                        <button type="button" class="btn btn-default btn-sm" ng-class="{'btn-primary':editedRecipe.mode === 'heat'}" ng-click="editedRecipe.mode = 'heat'">
+                           <span class="glyphicon glyphicon-fire"></span>{{'HEAT' | translate}}
+                        </button>
+                        <button type="button" class="btn btn-default btn-sm" ng-class="{'btn-primary':editedRecipe.mode === 'cool'}" ng-click="editedRecipe.mode = 'cool'">
+                           <span class="glyphicon glyphicon-asterisk"></span>{{'COOL' | translate}}
+                        </button>
+                     </div>
+                  </div>
+               </div>
+            </form>
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancelEdit()">{{'ABORT' | translate}}</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="finishRecipeEdit()">{{'SAVE' | translate}}</button>
+         </div>
+      </div>
+   </div>
+</div>
+
+<!-- Modal for step -->
+<div class="modal fade" id="modalStep" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">{{'CLOSE' | translate}}</span></button>
+            <h4 class="modal-title" id="myModalLabel">{{'RECIPES_MODALRECIPESTEP_EDIT' | translate}}</h4>
+         </div>
+         <div class="modal-body">
+            <form name="recipeForm">
+               <table class="table">
+                  <!-- Name -->
+                  <tr>
+                     <td>{{'RECIPES_MODALRECIPESTEP_NAME' | translate}}</td>
+                     <td>
+                        <input type="text" class="form-control" ng-model="editedStep.name">
+                     </td>
+                  </tr>
+                  <!-- Abbruchkriterium -->
+                  <tr>
+                     <td>{{'RECIPES_MODALRECIPESTEP_ABORTCRITERIA' | translate}}</td>
+                     <td>
+                        <select class="form-control" ng-model="editedStep.endStepBy">
+                           <option value="time">{{'RECIPES_MODALRECIPESTEP_TIME' | translate}}</option>
+                           <!--option value="temp">Temperatur</option-->
+                           <option value="never">{{'RECIPES_MODALRECIPESTEP_MANUAL' | translate}}</option>
+                        </select>
+                     </td>
+                  </tr>
+                  <!-- Zeit -->
+                  <tr ng-show='editedStep.endStepBy === "time"'>
+                     <td>{{'RECIPES_MODALRECIPESTEP_DURATION' | translate}}</td>
+                     <td>
+                        <div class="input-group" ng-show="editedRecipe.mode == 'cool'">
+                           <input ng-disabled="editedStep.endStepBy != 'time'" type="number" min=0 max=65000 class="form-control" ng-model="editedStep.timeLimit">
+                           <span class="input-group-addon">{{'RECIPES_MODALRECIPESTEP_HOURS' | translate}}</span>
+                        </div>
+                        <div class="input-group" ng-show="editedRecipe.mode == 'heat'">
+                           <input ng-disabled="editedStep.endStepBy != 'time'" type="number" min=0 max=65000 class="form-control" ng-model="editedStep.timeLimit">
+                           <span class="input-group-addon">{{'RECIPES_MODALRECIPESTEP_MINUTES' | translate}}</span>
+                        </div>
+                     </td>
+                  </tr>
+
+                  <!-- Temperatur -->
+
+                  <tr>
+                     <td>{{'RECIPES_MODALRECIPESTEP_TEMP' | translate}}</td>
+                     <td>
+                        <div class="input-group">
+                           <input type="number" min=0 max=150 class="form-control" ng-model="editedStep.targetTemperature">
+                           <span class="input-group-addon">°C</span>
+                        </div>
+                     </td>
+                  </tr>
+                  <!-- Rühren -->
+
+                  <tr>
+                     <td>{{'RECIPES_MODALRECIPESTEP_STIRR' | translate}}
+                     </td>
+                     <td>
+                        <select class="form-control" ng-model="editedStep.stirr" ng-options="boolToStr(item) for item in [true, false]">
+                        </select>
+                     </td>
+                  </tr>
+               </table>
+            </form>
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancelEdit()">{{'ABORT' | translate}}</button>
+            <button type="button" ng-disabled="!recipeForm.$valid" class="btn btn-primary" data-dismiss="modal" ng-click="finishStepEdit()">{{ 'SAVE' | translate}}</button>
+         </div>
+      </div>
+   </div>
+</div>
+
+
+
+<!-- Modal for import -->
+<div class="modal fade" id="modalImport" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" ng-controller="jsonUploadController">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">{{'CLOSE' | translate}}</span></button>
+            <h4 class="modal-title" id="myModalLabel">{{'RECIPES_IMPORT_HEADER' | translate}}</h4>
+         </div>
+         <div class="modal-body">
+
+            <table class="table">
+               <!-- Name -->
+               <tr>
+                  <td>{{'RECIPES_IMPORT_CHOSEFILE' | translate}}</td>
+                  <td>
+                     <div>
+                        <input type="file" file-upload multiple />
+                     </div>
+                     <div style=" margin-top: 10px;">
+                        <ul class="list-group">
+                           <li class="list-group-item" ng-repeat="file in files">{{file.name}}</li>
+                        </ul>
+                     </div>
+                  </td>
+               </tr>
+            </table>
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancelEdit()">{{'ABORT' | translate}}</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="parseFiles()">{{'RECIPES_IMPORT_IMPORTBTN' | translate}}</button>
+         </div>
+      </div>
+   </div>
+</div>
+
+<div class="modal fade" id="modalImportBeerXML" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" ng-controller="jsonUploadController">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">{{'CLOSE' | translate}}</span></button>
+            <h4 class="modal-title" id="myModalLabel">{{'RECIPES_IMPORT_BEERXML_HEADER' | translate}}</h4>
+         </div>
+         <div class="modal-body">
+
+            <table class="table">
+               <!-- Name -->
+               <tr>
+                  <td>{{'RECIPES_IMPORT_CHOSEFILE' | translate}}</td>
+                  <td>
+                     <div>
+                        <input type="file" file-upload multiple />
+                     </div>
+                     <div style=" margin-top: 10px;">
+                        <ul class="list-group">
+                           <li class="list-group-item" ng-repeat="file in files">{{file.name}}</li>
+                        </ul>
+                     </div>
+                  </td>
+               </tr>
+            </table>
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancelEdit()">{{'ABORT' | translate}}</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="parseBeerXMLFiles()">{{'RECIPES_IMPORT_IMPORTBTN' | translate}}</button>
+         </div>
+      </div>
+   </div>
+</div>

@@ -1,0 +1,96 @@
+<div class="fullArea">
+   <div ng-show="getiOSDevice() == true">
+      <a href="#/logs">
+         <button type="button" class="btn btn-primary btn-sm">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+            {{ 'LOGDETAIL_BACK' | translate}}
+         </button>
+      </a>
+   </div>
+
+   <h3 translate="LOGDETAIL_BREWREPORT" translate-value-name="{{log.name}}"><small>{{log.started | date : ' (dd.MM.yyyy)'}}</small></h3>
+   <h4>{{'LOGDETAIL_OVERVIEW' | translate}}</h4>
+
+   <table class="table table-condensed">
+
+      <tbody>
+         <tr ng-show="log.mode == 'heat'">
+            <td style="width: 150px;">{{'SUDNUMBER' | translate}}</td>
+            <td>{{log.sudNumber}}</td>
+         </tr>
+         <tr>
+            <td>{{'LOGDETAIL_PROCESSSTARTED' | translate}}</td>
+            <td>{{log.started | date : 'dd.MM.yyyy HH:mm:ss' }}</td>
+         </tr>
+         <tr>
+            <td>{{'LOGDETAIL_PROCESSFINISHED' | translate}}</td>
+            <td>{{log.finished | date : 'dd.MM.yyyy HH:mm:ss' }}</td>
+         </tr>
+         <tr>
+            <td>{{'LOGDETAIL_DURATION' | translate}}</td>
+            <td>{{duration}}</td>
+         </tr>
+         <tr>
+            <td>{{'LOGDETAIL_SUDSIZE' | translate}}</td>
+            <td>{{log.sudSizeLitres}}l</td>
+         </tr>
+         <tr>
+            <td>{{'' | translate}}Modus</td>
+            <td>
+               <div ng-show="log.mode == 'heat'" class="glyphicon glyphicon-fire"></div>
+               <div ng-show="log.mode == 'cool'" class="glyphicon glyphicon-asterisk"></div>
+            </td>
+         </tr>
+      </tbody>
+   </table>
+
+   <h4>{{'TEMPERATUREHISTORY' | translate}}</h4>
+   <div ng-controller="ChartControllerDetail" class="chart-spacer-detail">
+      <nvd3-line-chart title="Temperaturverlauf" height="300" data="chartData" objectequality="true" showXAxis="true" showYAxis="true" tooltips="true" xAxisTickFormat="xAxisTickFormatFunction()" interactive="true">
+      </nvd3-line-chart>
+   </div>
+
+   <h4 style="margin-top:23px;">{{'LOGDETAIL_RECIPESTEPS' | translate}}</h4>
+   <table class="table table-bordered table-compact">
+      <thead>
+         <tr>
+            <th>#</th>
+            <th>{{'LOGDETAIL_NAME' | translate}}</th>
+            <th>{{'LOGDETAIL_START' | translate}}</th>
+            <th>{{'LOGDETAIL_TEMPREACHED' | translate}}</th>
+            <th>{{'LOGDETAIL_DURATIONREACH' | translate}}</th>
+            <th>{{'LOGDETAIL_DURATIONHOLD' | translate}}</th>
+            <th>&#916;T (C/min)</th>
+            <th>Ziel (°C)</th>
+            <th>Min (°C)</th>
+            <th>Max (°C)</th>
+            <th translate="LOGDETAIL_AVGTEMPHOLD" translate-value-avg="&oslash; (°C)"></th>
+         </tr>
+      </thead>
+      <tbody>
+         <tr ng-repeat="step in log.steps">
+            <td>{{$index}}</td>
+            <td>{{step.name}}</td>
+            <td>{{step.started | date : 'HH:mm:ss'}}</td>
+            <td>{{step.tempReached | date : 'HH:mm:ss'}}</td>
+            <td>{{getStepDuration($index,'change')}}</td>
+            <td>{{getStepDuration($index,'hold')}}</td>
+            <td>{{getDeltaT($index) | number : 3}}</td>
+            <td>{{getStepTargetTemp($index) | number : 1}}</td>
+            <td>{{getStepMinTemp($index) | number : 1}}</td>
+            <td>{{getStepMaxTemp($index) | number : 1}}</td>
+            <td>{{getStepAvgTemp($index) | number : 1}}</td>
+         </tr>
+      </tbody>
+   </table>
+
+   <h4 style="margin-top:23px;" ng-show="log.logs.comments.length > 0">{{'LOGDETAIL_COMMENTS' | translate}}</h4>
+   <table class="table table-bordered table-compact" ng-show="log.logs.comments.length > 0">
+      <tbody>
+         <tr ng-repeat="comment in log.logs.comments">
+            <td class="table-comment-label">{{comment[0]| date : 'dd.MM.yyyy HH:mm:ss' }}</td>
+            <td class="table-comment-value">{{comment[1]}}</td>
+         </tr>
+      </tbody>
+
+</div>

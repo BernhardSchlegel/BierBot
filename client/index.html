@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html ng-app="BrewApp" ng-controller="MainController as mainCtrl">
+
+<head>
+
+   <title>BierBot {{bierBotName}}</title>
+
+   <meta charset="utf-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+
+   <!-- social -->
+   <link href="css/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet">
+   <link href="css/bootstrap-social.css" rel="stylesheet">
+   <meta http-equiv="X-UA-Compatible" value="IE=9">
+   <!--[if lt IE 9]>
+      <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+   <!-- Bootstrap -->
+   <link href="css/bootstrap.min.css" rel="stylesheet">
+   <link rel="stylesheet" type="text/css" href="css/brew.css" />
+   <link rel="stylesheet" type="text/css" href="bower_components/ng-sortable/dist/ng-sortable.css" />
+
+   <!-- AngularJS -->
+   <script src="bower_components/angular/angular.min.js"></script>
+   <script src="bower_components/angular-route/angular-route.min.js"></script>
+   <script src="bower_components/angular-cookies/angular-cookies.min.js"></script>
+   <script src="bower_components/ng-sortable/dist/ng-sortable.min.js"></script>
+   <script type="text/javascript" src="js/app.js"></script>
+   <script src="/socket.io/socket.io.js"></script>
+   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+   <script src="bower_components/jquery/dist/jquery.min.js"></script>
+   <!-- Include all compiled plugins (below), or include individual files as needed -->
+   <script type="text/javascript" src="js/bootstrap.min.js"></script>
+   <script type="text/javascript" src="js/ui-bootstrap/ui-bootstrap-0.13.3.js"></script>
+
+   <!-- BeerXML -->
+   <script type="text/javascript" src="js/json2xml.js"></script>
+   <script type="text/javascript" src="js/xml2json.js"></script>
+
+   <!-- multi-language -->
+   <script src="bower_components/angular-translate/angular-translate.js"></script>
+
+   <!-- graphs -->
+   <!--script src="bower_components/d3/d3.js"></script-->
+   <script src="bower_components/d3/d3.min.js"></script>
+   <script src="bower_components/nvd3/nv.d3.min.js"></script>
+   <script src="bower_components/angularjs-nvd3-directives/dist/angularjs-nvd3-directives.js"></script>
+   <link rel="stylesheet" href="bower_components/nvd3/nv.d3.css" />
+
+   <!-- own -->
+   <script src="js/common.js"></script>
+
+   <!-- web app -->
+   <meta name="apple-mobile-web-app-title" content="BierBot {{bierBotName}}" />
+   <meta name="mobile-web-app-capable" content="yes">
+   <meta name="apple-mobile-web-app-capable" content="yes">
+   <link rel="shortcut icon" sizes="192x192" href="icon/brewicon_192x192.png">
+   <link rel="apple-touch-icon" href="icon/brewicon_apple_192x192.png">
+   <link rel="apple-touch-icon" sizes="72x72" href="icon/brewicon_apple_72x72.png" />
+   <link rel="apple-touch-icon" sizes="114x114" href="icon/brewicon_apple_114x114.png" />
+   <link rel="apple-touch-icon" sizes="144x144" href="icon/brewicon_apple_144x144.png" />
+
+   <!-- analtics -->
+   <script src="bower_components/angular-google-analytics/dist/angular-google-analytics.js"></script>
+
+</head>
+
+<body>
+
+   <div class="modal fade" id="pleaseWaitDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false" href="#">
+      <div class="modal-dialog">
+         <div class="modal-content">
+            <div class="modal-header">
+               <h3>{{ 'LOADING' | translate }}</h3>
+            </div>
+            <div class="modal-body">
+               <div class="progress">
+                  <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                     <!---span class="sr-only">45% Complete</span-->
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+
+   <div class="modal fade" id="updateInstallDlg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false" href="#">
+      <div class="modal-dialog">
+         <div class="modal-content">
+            <div class="modal-header">
+               <h3>{{ 'UPDATE_INSTALLING' | translate }}</h3>
+            </div>
+            <div class="modal-body">
+               <div class="progress">
+                  <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                     <!---span class="sr-only">45% Complete</span-->
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+
+
+   <a href="#/settings" ng-show="updateAvailable">
+      <div class="update-available">
+         <button type="button" class="btn btn-danger btn-md update-available">
+            <span class="glyphicon glyphicon-alert" aria-hidden="true"></span>
+            <span class="update-text">{{'IDX_UPDATEAVAILALBE' | translate}}</span>
+         </button>
+      </div>
+   </a>
+
+   <div class="modal fade" id="resettingDlg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+         <div class="modal-content">
+            <div class="modal-header">
+               <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">{{'CLOSE' | translate}}</span></button>
+               <h4 class="modal-title" id="myModalLabel">{{'RESETTING' | translate}}</h4>
+            </div>
+            <div class="modal-body">
+               {{'BIERBOT_RESETTING_DESC' | translate}}
+            </div>
+            <div class="modal-footer">
+               <button type="button" class="btn btn-primary btn-default" data-dismiss="modal">
+                  {{'CLOSE' | translate}}</button>
+            </div>
+         </div>
+      </div>
+   </div>
+
+   <nav ng-controller="BrewNavController as brewNav" class="navbar navbar-inverse" role="navigation">
+      <div class="container-fluid">
+         <!-- Brand and toggle get grouped for better mobile display -->
+         <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+               <span class="sr-only">Toggle navigation</span>
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#/frontpage" ng-click="brewNav.select(0)">
+               <img src="icon/brewicon_25x25.png" alt="brewicon" class="header-icon">
+               <span>BierBot {{bierBotName}}</span>
+               <span ng-hide="controlStateInitialized == false || physicsInitialized == false">
+                  <span class="title-temp" ng-show="temp1"> {{temp1 | number : 1}}°C</span>
+                  <span ng-show="mode == 'heat'" ng-class="{'glyphicon-disabled' : heatingCooling == false}" class="glyphicon glyphicon-small glyphicon-fire"></span>
+                  <span ng-show="mode == 'cool'" ng-class="{'glyphicon-disabled' : heatingCooling == false}" class="glyphicon glyphicon-small glyphicon-asterisk"></span>
+                  <span ng-class="{'glyphicon-disabled' : stirr == 0}" class="glyphicon glyphicon-small glyphicon-repeat"></span>
+               </span>
+
+               <span class="title-temp" ng-show="wifiSignal">
+                  <span ng-style="signalStyle" class="glyphicon glyphicon-signal wifi-bars" aria-hidden="true"></span>
+               </span>
+            </a>
+         </div>
+
+         <!-- Collect the nav links, forms, and other content for toggling -->
+         <div class="collapse navbar-collapse nav-collapse" data-toggle="collapse" data-target=".nav-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+               <li ng-class="{ active:isSelected(1) }">
+                  <a href="#/automatic" ng-click="select(1)">
+                     <span class="glyphicon glyphicon-flash"></span>
+                     {{'NAV_AUTO' | translate}}
+                  </a>
+               </li>
+               <li ng-class="{ active:isSelected(2) }">
+                  <a href="#/manual" ng-click="select(2)">
+                     <span class="glyphicon glyphicon glyphicon-hand-up"></span>
+                     {{'NAV_MANUAL' | translate}}
+                  </a>
+               </li>
+               <li ng-class="{ active:isSelected(3) }">
+                  <a href="#/recipes" ng-click="select(3)">
+                     <span class="glyphicon glyphicon glyphicon-book"></span>
+                     {{'NAV_RECIPES' | translate}}
+                  </a>
+               </li>
+               <li ng-class="{ active:isSelected(4) }">
+                  <a href="#/logs" ng-click="select(4)">
+                     <span class="glyphicon glyphicon glyphicon glyphicon-time"></span>
+                     {{'NAV_LOGS' | translate}}
+                  </a>
+               </li>
+               <li class="visible-xs" ng-class="{ active:isSelected(5) }">
+                  <a href="#/settings" ng-click="select(5)">
+                     <span class="glyphicon glyphicon glyphicon-wrench"></span>
+                     {{'NAV_SETTINGS' | translate}}
+                  </a>
+               </li>
+               <li class="visible-sm visible-md visible-lg" ng-class="{ active:isSelected(5) }">
+                  <a href="#/settings" ng-click="select(5)">
+                     <span class="glyphicon glyphicon glyphicon-wrench"></span>
+                  </a>
+               </li>
+            </ul>
+         </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+   </nav>
+
+   <section class="alerts" ng-controller="alertController as alertCtrl">
+
+      <div class="alert-canvas">
+         <div class="alert-canvas-content ">
+
+            <div class="alert alert-success alert-dismissible collapse fade" role="alert" id="alertSuccess">
+               <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+               {{alertMsg}}
+            </div>
+
+            <div class="alert alert-danger alert-dismissible collapse fade" role="alert" id="alertFailed">
+               <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+               {{alertMsg}}
+            </div>
+
+            <div class="alert alert-info alert-dismissible collapse fade" role="alert" id="alertInfo">
+               <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+               {{alertMsg}}
+            </div>
+         </div>
+
+   </section>
+
+
+   <section ng-controller="lostConnectionController as lcCtrl">
+      <div class="modal fade" id="modalLostConnection" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false" href="#">
+         <div class="modal-dialog">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h3>{{'LOSTCONNECTION_TITLE' | translate}}</h3>
+               </div>
+               <div class="modal-body">
+                  <div>
+                     <p>{{'LOSTCONNECTION_TIME' | translate}}: {{lastPing | date:'HH:mm:ss'}}</p>
+                  </div>
+                  <div ng-show="lastName.length > 0">
+                     <p>{{'LOSTCONNECTION_STEP' | translate}}: {{lastName}}
+                        <p>
+                  </div>
+                  <p>{{'LOSTCONNECTION_NOPANIC' | translate}}</p>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+
+   <div class="container-fluid" ng-view> </div>
+
+</body>
+
+</html>
