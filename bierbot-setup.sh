@@ -23,8 +23,11 @@ then
    sudo apt-get remove nodejs -y
    sudo apt-get autoremove -y
    sudo apt-get autoclean -y
-   curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
+   sudo curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | sudo bash
+   sudo -s
+   source ~/.bash
    nvm install 10
+   exit
 else
    echo "proceeding with default node"
    curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
@@ -62,7 +65,9 @@ sudo tee /etc/network/interfaces < /home/pi/BierBot/sys/interfaces
 
 echo installing dependencies for backend...
 cd /home/pi/BierBot/server
-sudo -u pi npm install
+su pi
+npm install
+exit
 
 echo inizializing backend...
 cd /home/pi/BierBot/server
