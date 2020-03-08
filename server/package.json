@@ -14,7 +14,7 @@
         "cpuinfo": "0.1.0",
         "ds18x20": "0.2.0",
         "ejs": "0.8.8",
-        "express": "4.0.0",
+        "express": "4.17.1",
         "express-session": "1.0.4",
         "formidable": "1.0.15",
         "fs-extra": "0.12.0",
