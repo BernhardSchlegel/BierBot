@@ -16,8 +16,21 @@ echo starting mongodb service...
 sudo service mongodb start
 
 echo installing NodeJS...
-curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
-sudo apt-get install -y nodejs
+modelinfo=$( uname -m )
+if [[ $modelinfo =~ "armv6l" ]]
+then
+   echo "running on arm, using differnt nodesource..."
+   sudo apt-get remove nodejs -y
+   sudo apt-get autoremove -y
+   sudo apt-get autoclean -y
+   curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
+   nvm install 10
+else
+   echo "proceeding with default node"
+   curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
+   sudo apt-get install -y nodejs
+fi
+
 
 echo installing git...
 sudo apt-get install git -y
@@ -59,10 +72,9 @@ echo installing dependencies for frontend...
 cd /home/pi/BierBot/client
 sudo -u pi bower install
 
-echo trying to bring wlan0 interface up. 
+echo trying to bring wlan0 interface up.
 sudo ifconfig wlan0 up
 echo an error above is OK when you dont have an wifi adapter
 
 echo You may want to restart now: sudo restart -r now
 echo BierBot says: gut Sud!
-
