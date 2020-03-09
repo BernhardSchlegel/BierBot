@@ -70,28 +70,110 @@ cd ~ && wget https://raw.githubusercontent.com/BernhardSchlegel/BierBot/master/b
 If you want to know what the script does in the background, check out the
 (potentially outdated) explanation [here](/doc/SETUP_MANUAL.MD).
 
+
+## Compatibility
+
+The BierBot install script and Software has been tested on the following
+Raspberry Pis ([source](https://de.wikipedia.org/wiki/Raspberry_Pi)):
+
+<table>
+   <thead>
+      <tr>
+         <th>Raspberry Pi</th>
+         <th colspan=4>1</th>
+         <th colspan=2>2</th>
+         <th colspan=3>3</th>
+         <th colspan=1>4</th>
+      </tr>
+         <tr>
+            <th>Type</th>
+            <th>A</th>
+            <th>A+</th>
+            <th>B</th>
+            <th>B+</th>
+            <th>B</th>
+            <th>B v1.2</th>
+            <th>A+</th>
+            <th>B v.1.2</th>
+            <th>B+</th>
+            <th>B</th>
+         </tr>
+   </thead>
+   <tbody>
+      <tr>
+         <td>ARM</td>
+         <td align="center" colspan=4>ARMv6 (32 Bit)</td>
+         <td>ARMv7 (32Bit)</td>
+         <td align="center"colspan=5>ARMv8 (64 Bit)</td>
+      </tr>
+      <tr>
+         <td>Power to beep</td>
+         <td></td>
+         <td></td>
+         <td></td>
+         <td></td>
+         <td></td>
+         <td>1m 31s</td>
+         <td></td>
+         <td>1m 36s</td>
+         <td></td>
+         <td>1m 33s</td>
+      </tr>
+      <tr>
+         <td>setupscript</td>
+         <td></td>
+         <td></td>
+         <td></td>
+         <td></td>
+         <td></td>
+         <td>:heavy_check_mark:</td>
+         <td></td>
+         <td>:heavy_check_mark:</td>
+         <td></td>
+         <td>:heavy_check_mark:</td>
+      </tr>
+      <tr>
+         <td>software</td>
+         <td></td>
+         <td></td>
+         <td></td>
+         <td></td>
+         <td></td>
+         <td>:heavy_check_mark:</td>
+         <td></td>
+         <td>:heavy_check_mark:</td>
+         <td></td>
+         <td>:heavy_check_mark:</td>
+      </tr>
+   </tbody>
+</table>
+
+**TL;DR**: Get the cheapest one, in terms of startup speed: No difference.
+
+If you happen to own one of the models with a blank cell, shoot me a message!
+
 ## Hardware-Setup
 
 The default BierBot wiring is as follows (I'll use the `RPi# (pigpio#)` syntax):
 
 ![BierBot Wiring](doc/img/wiring.png)
 
-- The [DS18B20](https://amzn.to/2TQrvxQ) sensor is connected to 3,3V, GND, and
-  Pin Number RPi 7 (pi-gpio 7). With the latter being the data-channel of your sensor.
-- The control channel of your Relais is connected to 11 (17). This will be used
-  to turn on/off your heating / cooling device.
-- Your motor (for stirring your mash) is connected to Pin 12 (18). This is a PWM
-  Pin - which will be used. You can set your Motor Voltage on the BierBot
-  settings page.
-- Pin 13 (27) is *optional*: If you want your temperature sensor to be hot pluggable
-  connect this pin. It will trigger an ISR on either edge (falling / rising) and
-  is pulled via an internal resistor to ground.
-- Pin 15 (22) is also *optional*: If you connect a [piezzo buzzer](https://amzn.to/2vDWe9D) the BierBot tells you with a beeping symphony when the next step is
-  reached or the brew is finished.  
+-   The [DS18B20](https://amzn.to/2TQrvxQ) sensor is connected to 3,3V, GND, and
+    Pin Number RPi 7 (pi-gpio 7). With the latter being the data-channel of your sensor.
+-   The control channel of your Relais is connected to 11 (17). This will be used
+    to turn on/off your heating / cooling device.
+-   Your motor (for stirring your mash) is connected to Pin 12 (18). This is a PWM
+    Pin - which will be used. You can set your Motor Voltage on the BierBot
+    settings page.
+-   Pin 13 (27) is _optional_: If you want your temperature sensor to be hot pluggable
+    connect this pin. It will trigger an ISR on either edge (falling / rising) and
+    is pulled via an internal resistor to ground.
+-   Pin 15 (22) is also _optional_: If you connect a [piezzo buzzer](https://amzn.to/2vDWe9D) the BierBot tells you with a beeping symphony when the next step is
+    reached or the brew is finished.  
 
 ## TODOS
 
-- migrate client package management from `bower` to `yarn`.
+-   migrate client package management from `bower` to `yarn`.
 
 ## Contributing
 
@@ -100,7 +182,7 @@ Please see the [notes for developers](/doc/CONTRIBUTING.MD) to get you started!
 
 ## License
 
-- My Code: [MIT](http://opensource.org/licenses/MIT)
-- Orange Mash BierBot Logo: (c) by Bernhard Schlegel, all rights reserved.
+-   My Code: [MIT](http://opensource.org/licenses/MIT)
+-   Orange Mash BierBot Logo: (c) by Bernhard Schlegel, all rights reserved.
 
 Copyright (c) 2014-present, Bernhard Schlegel

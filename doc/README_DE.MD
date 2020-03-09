@@ -70,6 +70,87 @@ cd ~ && wget https://raw.githubusercontent.com/BernhardSchlegel/BierBot/master/b
 
 **Glückwunsch**, das wars.
 
+## Kompatiblität
+
+Die folgende Tabelle gibt eine Übersicht auf welchen Rasberry Pis die
+BierBot Software funktioniert ([source](https://de.wikipedia.org/wiki/Raspberry_Pi)):
+
+<table>
+   <thead>
+      <tr>
+         <th>Raspberry Pi</th>
+         <th colspan=4>1</th>
+         <th colspan=2>2</th>
+         <th colspan=3>3</th>
+         <th colspan=1>4</th>
+      </tr>
+         <tr>
+            <th>Type</th>
+            <th>A</th>
+            <th>A+</th>
+            <th>B</th>
+            <th>B+</th>
+            <th>B</th>
+            <th>B v1.2</th>
+            <th>A+</th>
+            <th>B v.1.2</th>
+            <th>B+</th>
+            <th>B</th>
+         </tr>
+   </thead>
+   <tbody>
+      <tr>
+         <td>ARM</td>
+         <td align="center" colspan=4>ARMv6 (32 Bit)</td>
+         <td>ARMv7 (32Bit)</td>
+         <td align="center"colspan=5>ARMv8 (64 Bit)</td>
+      </tr>
+      <tr>
+         <td>Power to beep</td>
+         <td></td>
+         <td></td>
+         <td></td>
+         <td></td>
+         <td></td>
+         <td>1m 31s</td>
+         <td></td>
+         <td>1m 36s</td>
+         <td></td>
+         <td>1m 33s</td>
+      </tr>
+      <tr>
+         <td>setupscript</td>
+         <td></td>
+         <td></td>
+         <td></td>
+         <td></td>
+         <td></td>
+         <td>:heavy_check_mark:</td>
+         <td></td>
+         <td>:heavy_check_mark:</td>
+         <td></td>
+         <td>:heavy_check_mark:</td>
+      </tr>
+      <tr>
+         <td>software</td>
+         <td></td>
+         <td></td>
+         <td></td>
+         <td></td>
+         <td></td>
+         <td>:heavy_check_mark:</td>
+         <td></td>
+         <td>:heavy_check_mark:</td>
+         <td></td>
+         <td>:heavy_check_mark:</td>
+      </tr>
+   </tbody>
+</table>
+
+**TL;DR**: Holt euch den billigsten - es sind alle gleich schnell.
+
+Wenn ihr Werte für leere Zeilen habt, schickt mir gerne eine Nachricht!
+
 ## Hardware-Setup
 
 Standardmäßig muss der BierBot wie folgt verkabel werden (ich werde mich an denied `RPi# (pigpio#)` Syntax halten):
