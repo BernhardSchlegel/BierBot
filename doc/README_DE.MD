@@ -7,7 +7,7 @@ This README is also available in [English ![English](https://raw.githubuserconte
 
 ## Funktionen
 
--   Läuft auf dem RaspberryPi ([kompatibile PIs](#compatibility)).
+-   Läuft auf dem RaspberryPi ([kompatibile PIs](#kompatiblität)).
 -   Komplett freie, Open Source Lizenz (MIT).
 -   Einfache Installation (Einzeiler).
 -   Simpel: Ein Sensor, ein Relais.
