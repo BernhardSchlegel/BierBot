@@ -9,7 +9,6 @@ function patchMongo(path) {
       var strToInject = "new Proxy({}, ";
 
       fs.readFile(path, 'utf8', function(err, data) {
-         console.log('test');
          if (err) {
             console.log(err);
             return;
@@ -49,7 +48,6 @@ function createUser() {
       usr.local.password = usr.generateHash("bierbot123");
 
       usr.save(function(err) {
-         console.info("YOYOY");
          if (err) {
             console.error("user creation failed: " + err);
             resolve('err');
