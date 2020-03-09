@@ -21,7 +21,7 @@ modelinfo=$( uname -m )
 if [[ $modelinfo =~ "armv6l" ]]
 then
   echo "detected platform ${modelinfo}"
-  url="https://nodejs.org/dist/latest-v10.x/node-v10.19.0-linux-$modelinfo.tar.gz"
+  url="https://nodejs.org/dist/latest-v10.x/node-v10.19.0-linux-${modelinfo}.tar.gz"
   # backup https://nodejs.org/dist/latest-v10.x/node-v10.19.0-linux-armv6l.tar.gz
   echo getting $url
   wget $url 
