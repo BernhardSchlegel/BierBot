@@ -16,22 +16,22 @@ echo starting mongodb service...
 sudo service mongodb start
 
 echo installing NodeJS...
+cd ~
 modelinfo=$( uname -m )
 if [[ $modelinfo =~ "armv6l" ]]
 then
-   echo "running on arm, using differnt nodesource..."
-   sudo apt-get remove nodejs -y
-   sudo apt-get autoremove -y
-   sudo apt-get autoclean -y
-   sudo curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | sudo bash
-   sudo -s
-   source ~/.bash
-   nvm install 10
-   exit
+  echo "detected platform ${modelinfo}"
+  url="https://nodejs.org/dist/latest-v10.x/node-v10.19.0-linux-$modelinfo.tar.gz"
+  # backup https://nodejs.org/dist/latest-v10.x/node-v10.19.0-linux-armv6l.tar.gz
+  echo getting $url
+  wget $url 
+  tar -xzf node-v10.19.0-linux-armv6l.tar.gz
+  cd node-v10.19.0-linux-armv6l/
+  sudo cp -R * /usr/local/
 else
-   echo "proceeding with default node"
-   curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
-   sudo apt-get install -y nodejs
+  echo "proceeding with default node"
+  curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
+  sudo apt-get install -y nodejs
 fi
 
 
