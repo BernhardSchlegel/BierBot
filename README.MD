@@ -7,7 +7,7 @@ This README is also available in [German ![Germany](https://raw.githubuserconten
 
 ## Key features
 
--   Runs on RaspberryPi (tested on RPi4)
+-   Runs on Raspberry PI ([compatibile PIs](#compatibility)).
 -   Free, do-the-fuck-you-want Open Source license (MIT).
 -   Easy to setup (one liner)
 -   Simple: One senor, one relay.
@@ -119,7 +119,7 @@ Raspberry Pis ([source](https://de.wikipedia.org/wiki/Raspberry_Pi)):
          <td></td>
          <td>1m 33s</td>
       </tr>
-      <tr>
+      <tr align="center">
          <td>setupscript</td>
          <td></td>
          <td></td>
@@ -132,7 +132,7 @@ Raspberry Pis ([source](https://de.wikipedia.org/wiki/Raspberry_Pi)):
          <td></td>
          <td>:heavy_check_mark:</td>
       </tr>
-      <tr>
+      <tr align="center">
          <td>software</td>
          <td></td>
          <td></td>
