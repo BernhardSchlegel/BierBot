@@ -44,8 +44,8 @@ echo creating autostart...
 sudo cp /home/pi/BierBot/sys/bierbot.service /etc/systemd/system/bierbot.service
 sudo systemctl enable bierbot.service
 
-echo modifying network settings to enable wifi
-sudo tee /etc/network/interfaces < /home/pi/BierBot/sys/interfaces
+#echo modifying network settings to enable wifi
+#sudo tee /etc/network/interfaces < /home/pi/BierBot/sys/interfaces
 
 echo installing dependencies for backend...
 cd /home/pi/BierBot/server
