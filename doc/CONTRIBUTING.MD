@@ -5,7 +5,10 @@ General, short hints to get you started:
 -   Start the BierBot by `sudo /usr/bin/node /home/pi/BierBot/server/server.js`
 -   Attach to nodeJS service `sudo node --inspect=0.0.0.0:9229 /home/pi/BierBot/server/server.js`
 -   To view the service logs (might be helpful when the BierBot crashed) `journalctl -e -u bierbot.service`
--   To ease app for minification, annotation may be necessary. install ng-annotate (just for developement) `sudo npm install -g  ng-annotate`. Use it: `ng-annotate -o app_annotated.js --add app.js` (run it from `./BierBot/client)`.
+    or `journalctl -u bierbot.service -f` to follow along.
+-   To ease app for minification, annotation may be necessary. install ng-annotate (just for developement) 
+    `sudo npm install -g  ng-annotate`. Use it: `ng-annotate -o app_annotated.js --add app.js` (run it from
+    `./BierBot/client)`.
 
 ### Setting up Samba Fileshare
 
