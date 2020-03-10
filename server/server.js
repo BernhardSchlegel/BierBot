@@ -202,7 +202,7 @@ var beepLongLongLong = function() {
 // configuration ===============================================================
 mongoose.connect(configDB.url); // connect to our database
 require('./config/passport')(passport); // pass passport for configuration
-var debugMode = true; // temp sensor will be simulated
+var debugMode = false; // temp sensor will be simulated
 // wifi will not be set
 var DEBUG_DO_NOT_ALTER_WIFI = false;
 
