@@ -37,6 +37,7 @@ const Gpio = require('pigpio').Gpio;
 var nodemailer = require('nodemailer'); // sending emails
 var cpuinfo = require('./libs/cpuid');
 var brewdate = require('./libs/brewdate');
+var defaults = require('./libs/defaults');
 var PD = require('./libs/pd')
 var version = require('./libs/version');
 var common = require('./libs/common');
