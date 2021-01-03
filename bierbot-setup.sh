@@ -7,7 +7,6 @@ fi
 
 echo upgrading operating system...
 sudo apt-get update -y
-sudo apt-get dist-upgrade -y
 
 echo installing mongodb...
 sudo apt-get install mongodb-server -y
