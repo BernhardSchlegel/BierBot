@@ -5,9 +5,8 @@ if [ "$EUID" -ne 0 ]
   exit
 fi
 
-echo upgrading operating system...
+echo updating package lists...
 sudo apt-get update -y
-sudo apt-get dist-upgrade -y
 
 echo installing mongodb...
 sudo apt-get install mongodb-server -y
@@ -63,5 +62,10 @@ echo trying to bring wlan0 interface up.
 sudo ifconfig wlan0 up
 echo an error above is OK when you dont have an wifi adapter
 
-echo You may want to restart now: sudo restart -r now
+echo enabling 1-wire protocol
+if ! grep -q dtoverlay=w1-gpio /boot/config.txt; then echo dtoverlay=w1-gpio,gpiopin=4,pullup=on | sudo tee -a /boot/config.txt > /dev/null; fi
+if ! grep -q w1-gpio /etc/modules; then echo w1-gpio | sudo tee -a /etc/modules > /dev/null; fi
+if ! grep -q w1-therm /etc/modules; then echo w1-therm | sudo tee -a /etc/modules > /dev/null; fi
+
+echo You may want to restart now: sudo reboot now
 echo BierBot says: gut Sud!

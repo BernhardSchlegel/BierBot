@@ -7,20 +7,20 @@ This README is also available in [English ![English](https://raw.githubuserconte
 
 ## Funktionen
 
--   Läuft auf dem RaspberryPi ([kompatibile PIs](#kompatiblität)).
--   Komplett freie, Open Source Lizenz (MIT).
--   Einfache Installation (Einzeiler).
--   Simpel: Ein Sensor, ein Relais.
--   PD-Controller der auch mit einfachen, günstigen Standard-Relais funktioniert
-    und dennoch effektiv das Überschiessen der Temperatur vermeidet.
--   Modi für Maischen und Gärung.
+-   Läuft auf dem Raspberry Pi ([kompatibile Pis](#kompatiblität))
+-   Komplett freie, Open Source Lizenz (MIT)
+-   Einfache Installation (Einzeiler)
+-   Simpel: Ein Sensor, ein Relais
+-   PD-Controller, der auch mit einfachen, günstigen Standard-Relais funktioniert
+    und dennoch effektiv das Überschiessen der Temperatur vermeidet
+-   Modi für Maischen und Gärung
 -   Multilingual (Deutsch, Englisch, Pull-Requests für weitere Sprachen sind
-    willkommen).
--   Integrierte Rezeptverwaltung: Rastdauer, -temperatur und Rührwerkskonfiguration.
+    willkommen)
+-   Integrierte Rezeptverwaltung: Rastdauer, -temperatur und Rührwerkskonfiguration
 -   Integriertes Logging: Der Temperaturverlauf wird während dem Brauen angezeigt,
     nach dem Brauvorgang gibt's einen Braubericht.
--   Passwortschutz (beta).
--   Läuft auf jedem iPhone, Android, Windows, Mac, Ubuntu und Raspberry Pi.
+-   Passwortschutz (beta)
+-   Läuft auf jedem Webbrowser
 
 ## Screenshots
 
@@ -68,11 +68,11 @@ Jetzt kannst du die BierBot Software installieren. Hier, wie versprochen, der
 cd ~ && wget https://raw.githubusercontent.com/BernhardSchlegel/BierBot/master/bierbot-setup.sh && chmod +x bierbot-setup.sh && sudo ./bierbot-setup.sh
 ```
 
-**Glückwunsch**, das wars.
+**Glückwunsch**, das wars. Dein BierBot ist jetzt unter http://BierBotBen erreichbar (du kannst den Namen deines BierBots auf der Konfigurationsseite ändern)
 
 ## Kompatiblität
 
-Die folgende Tabelle gibt eine Übersicht auf welchen Rasberry Pis die
+Die folgende Tabelle gibt eine Übersicht auf welchen Raspberry Pis die
 BierBot Software funktioniert ([source](https://de.wikipedia.org/wiki/Raspberry_Pi)):
 
 <table>
@@ -157,7 +157,7 @@ Standardmäßig muss der BierBot wie folgt verkabel werden (ich werde mich an de
 
 ![BierBot Wiring](/doc/img/wiring.png)
 
-- Der [DS18B20](https://amzn.to/2TQrvxQ) sensor muss mit 3,3V, GND und Pin
+- Der [DS18B20](https://amzn.to/2TQrvxQ) Sensor muss mit 3,3V, GND und Pin
   Nummer RPi 7 (pi-gpio 7) verbunden werden. Das ist der Datenkanal des
   Temperatur-Sensors.
 - Der Daten-Pin deines Relais muss mit Pin 11 (17) verbunden werden. Damit wird
@@ -169,7 +169,7 @@ Standardmäßig muss der BierBot wie folgt verkabel werden (ich werde mich an de
 - Pin 13 (27) is *optional*: Wenn der Temperatursensor nach dem Sart des
   BierBots ein- und ausgesteckt werden können soll, musst du diesen Pin verbinden.
   So wird eine ISR getriggert, die auf beiden Flanken (steigend und fallend) nach
-  neuen Temperatur sensoren sucht. Intern ist dieser Pin mit einem
+  neuen Temperatursensoren sucht. Intern ist dieser Pin mit einem
   Pulldown-Widerstand auf ground gezogen.
 - Pin 15 (22) ist ebenfalls *optional*: Hier kannst du einen [piezzo buzzer](https://amzn.to/2vDWe9D) anschließen. Der BierBot signalisiert dann mit einer
   Pieps-Symphonie, wenn der nächste Schritt erreicht wird, oder der Brauvorgang
