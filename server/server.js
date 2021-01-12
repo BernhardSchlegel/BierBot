@@ -6,7 +6,6 @@ var express = require('express'),
    app = module.exports.app = express();
 var cookie = require('cookie'); // #OSS delete if it works without it
 var connect = require('connect');
-
 var server = http.createServer(app);
 var io = require('socket.io')(server); //pass a http.Server instance
 server.listen(port); //listen on port
@@ -43,7 +42,6 @@ var PD = require('./libs/pd');
 var version = require('./libs/version');
 var common = require('./libs/common');
 version.chmod();
-var hostname = require('./libs/hostname');
 var brewlog = require('./libs/brewlog.js');
 var restoreclear = require('./libs/restoreclear.js');
 var plausible = require('./libs/plausible.js');
@@ -314,7 +312,7 @@ Setting.findOne(function(err, appSettings) {
          });
       } else {
          brewlog.log("hardwareRevision present: " + appSettings.hardwareRevision);
-         hardwareRevision = appSettings.hardwareRevision
+         hardwareRevision = appSettings.hardwareRevision;
       }
    }
 });
@@ -361,7 +359,7 @@ var scanForWifiNetworks = function(callback) {
                callback(err);
             } else {
                // Interface is upsetTimeout(function(){
-               brewlog.log('waiting 10s before scanning (ressource busy)')
+               brewlog.log('waiting 10s before scanning (ressource busy)');
                setTimeout(function() {
                   iwlistWrapper(callback);
                }, 30000); // 2000 is no longer enough for the new pi 2 b
@@ -376,7 +374,7 @@ var lastWiFiAdapterRestart = 0;
 var restartWiFiAdapater = function(finishedCallback) {
    var diffInMs = new Date() - lastWiFiAdapterRestart;
    if (diffInMs < 120000) {
-      brewlog.log("last WiFi reset is less than 120s ago. Aborting...")
+      brewlog.log("last WiFi reset is less than 120s ago. Aborting...");
       return;
    }
    lastWiFiAdapterRestart = new Date();
@@ -461,7 +459,7 @@ var getWifiSignalStrength = function() {
                      //brewlog.log("wifi.signal=" +status.signal);
 
                      if (status.signal == 0) {
-                        brewlog.log("connection lost... restarting wifi adapter...")
+                        brewlog.log("connection lost... restarting wifi adapter...");
                         restartWiFiAdapater(function() {
                            brewlog.log("wifi adapter restarted because of connection loss.");
                         });
@@ -722,7 +720,7 @@ io.use(function(socket, next) {
 var MAIN_INTERVAL_TIME = 1000; // BE EXTREMELY CAREFULL WITH CHANGING THIS SETTING
 morgan('combined', {
    skip: function(req, res) {
-      return res.statusCode < 400
+      return res.statusCode < 400;
    }
 });
 brewlog.log("Server started and listen to http://127.0.0.1:" + port);
@@ -808,7 +806,7 @@ function debounce(func, wait, immediate) {
       timeout = setTimeout(later, wait);
       if (callNow) func.apply(context, args);
    };
-};
+}
 
 var debouncedISREvent = debounce(function() {
    brewlog.log('debouncedISREvent called... ');
@@ -819,7 +817,7 @@ var debouncedISREvent = debounce(function() {
 }, 1500 /* DO NOT send a ,false here, cause (!immediate) will already be true*/ );
 
 setTimeout(function() {
-   brewlog.log('setting up ISR delayed (30s)')
+   brewlog.log('setting up ISR delayed (30s)');
    pinTemperaturePlugDetection.on('interrupt', (level) => {
       brewlog.log('temperature plug detection pin changed to LOW (' + level + ')... ');
       debouncedISREvent();
@@ -1001,7 +999,7 @@ io.sockets.on('connection', function(socket) {
                   loaded: 1,
                   started: 1,
                   finished: 1,
-               }
+               };
 
                brewlog.log('getting all logs ...');
                // get only a subset of fields
@@ -1013,7 +1011,7 @@ io.sockets.on('connection', function(socket) {
                      // assemble return array, holds everything but the logarray itself
                      items.forEach(function(elem, idx, array) {
                         elem.logs = [];
-                     })
+                     });
 
                      callback(false, items);
                      brewlog.log('getAllLogs: ' + items.length + ' logs sent.');
@@ -1078,7 +1076,7 @@ io.sockets.on('connection', function(socket) {
                            hardware.pd.hysteresis = incoming.hardware.pd.hysteresis;
 
                            // get the _id since _id cannot be replaced in mongoDB
-                           var id = hardware._id
+                           var id = hardware._id;
 
                            // remove from old object
                            delete hardware._id;
@@ -1108,7 +1106,7 @@ io.sockets.on('connection', function(socket) {
                         }
                      });
                   }
-               })
+               });
             });
 
             socket.on('addCommentToCurrentBrew', function(comment, callback) {
@@ -1352,7 +1350,7 @@ io.sockets.on('connection', function(socket) {
                   // recipe is a old recipe, needs to be updated
                   // get the _id since _id cannot be replaced in mongoDB
                   var stringID = recipe._id;
-                  var id = db.ObjectId(recipe._id)
+                  var id = db.ObjectId(recipe._id);
 
                   // remove from old object
                   delete recipe._id;
@@ -1373,7 +1371,7 @@ io.sockets.on('connection', function(socket) {
                               callback(false, recipe);
                               brewlog.log('recipe (' + recipe.name + ', ' + recipe._id + ') updated');
                            }
-                        })
+                        });
 
                         // db.recipes.find({_id: db.ObjectId(recipe._id)}, function(err, recipes) {
                         // 	if( err || !recipes) brewlog.log("No mathing recipe with id ' + id + ' found");
@@ -1441,7 +1439,7 @@ io.sockets.on('connection', function(socket) {
                         });
                      }
                   }
-               })
+               });
             });
 
 
@@ -1532,7 +1530,7 @@ io.sockets.on('connection', function(socket) {
                      PD.reset();
                      callback(null, upsertedHardware);
                   }
-               })
+               });
             });
 
             socket.on('getControlState', function(data, callback) {
@@ -1609,7 +1607,7 @@ var searchTemperatureSensors = function(leftAttempts) {
    } else {
       brewlog.log("no attempts left.");
    }
-}
+};
 
 var initTemperatureSensor = function() {
    var attempts = 10;
@@ -1623,9 +1621,9 @@ sensor.isDriverLoaded(function(err, isLoaded) {
    brewlog.log('w1 bus driver loaded: ' + isLoaded);
 
    if (isLoaded == false) {
-      brewlog.log('loading driver ...')
+      brewlog.log('loading driver ...');
       sensor.loadDriver(function(err) {
-         if (err) brewlog.log('something went wrong loading the driver:', err)
+         if (err) brewlog.log('something went wrong loading the driver:', err);
          else {
             brewlog.log('driver successfully loaded');
             initTemperatureSensor();
@@ -1817,11 +1815,10 @@ var enterSafeState = function() {
    setMotor(0);
    setHeatingCooling(0);
    safeModeActive = true;
-}
-
+};
 
 var finishAutoMode = function(callback) {
-   brewlog.log('finishing auto mode...')
+   brewlog.log('finishing auto mode...');
    getCurrentBrew(function(err, currentBrew) {
       if (err) {
          callback(err, null);
@@ -1863,7 +1860,7 @@ var finishAutoMode = function(callback) {
 var emptyCurrentBrewBuffer = function() {
    brewlog.log('clearing current brew buffer');
    currentBrewBuffered = null;
-}
+};
 
 var updateCurrentBrewInDatabase = function(clearBuffer, inspect) {
    // some basic checks, in order to determine if the cyclic
@@ -1885,7 +1882,7 @@ var updateCurrentBrewInDatabase = function(clearBuffer, inspect) {
 
             if (id1.equals(id2)) {
                // get the _id since _id cannot be replaced in mongoDB
-               var id = db.ObjectId(currentBrewBuffered._id)
+               var id = db.ObjectId(currentBrewBuffered._id);
                var idBackup = currentBrewBuffered._id;
 
                // remove from old object
@@ -1922,8 +1919,7 @@ var updateCurrentBrewInDatabase = function(clearBuffer, inspect) {
          }
       }
    });
-
-}
+};
 
 // start getting temperature
 var updateCurentBrewInDatabaseIntervalID = setInterval(function() {
@@ -1940,7 +1936,7 @@ var updateCurrentBrew = function(newCurrentBrew, callback, inspect) {
       brewlog.log(util.inspect(currentBrewBuffered, false, null));
    }
    callback(null); // no error
-}
+};
 
 var getCurrentBrewFromDatabase = function(callback) {
    db.logs.find({
@@ -1979,7 +1975,7 @@ var getCurrentBrew = function(callback) {
             currentBrewBuffered = currentBrewDB;
             callback(null, currentBrewDB);
          }
-      })
+      });
    }
 };
 
@@ -2087,7 +2083,7 @@ var transformRecipeToBrew = function(recipe, callback) {
                if (err) {
                   brewlog.log('new sudnumber not stored, error: ' + err);
                }
-            })
+            });
          }
 
          brew.basedOn = brew._id;
@@ -2202,7 +2198,7 @@ var autoModeIntervalID = setInterval(function() {
                      } else {
                         brewlog.log('tempReached is not set (' + currentStep.tempReached + ') ... setting');
                         brewlog.log('targettemp reached, setting holddate');
-                        currentStep.tempReached = getNowDate()
+                        currentStep.tempReached = getNowDate();
 
                         updateCurrentBrew(currentBrew, function(err) {
 
@@ -2319,7 +2315,7 @@ var controlIntervalID = setInterval(function() {
 var getNowDate = function() {
    var now = brewdate.gcd();
    return new Date(now.getTime() + now.getTimezoneOffset());
-}
+};
 
 // init
 // get currentBrew once in order to set auto mode
@@ -2343,7 +2339,7 @@ Setting.findOne(function(err, appSettings) {
       brewlog.log('failed getting app settings: ' + err);
    } else {
       boilingTempCBuffer = appSettings.boilingTempC;
-      brewlog.log("boiling temp set to " + boilingTempCBuffer + "°C.")
+      brewlog.log("boiling temp set to " + boilingTempCBuffer + "°C.");
       Hardware.findById(appSettings.selectedHardware, function(err, hardware) {
          if (err) {
             brewlog.log('getting hardware failed: ' + err);
@@ -2351,7 +2347,7 @@ Setting.findOne(function(err, appSettings) {
             if (hardware) {
                brewlog.log('selected hardware is: ' + hardware.name);
             } else {
-               brewlog.log("no hardware selected.")
+               brewlog.log("no hardware selected.");
             }
          }
       });
