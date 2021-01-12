@@ -42,6 +42,7 @@ var PD = require('./libs/pd');
 var version = require('./libs/version');
 var common = require('./libs/common');
 version.chmod();
+var hostname = require('./libs/hostname');
 var brewlog = require('./libs/brewlog.js');
 var restoreclear = require('./libs/restoreclear.js');
 var plausible = require('./libs/plausible.js');
