@@ -18,6 +18,11 @@ var defaultSettings = {
    "wlanPassphrase": "deinPW",
    "wlanSSID": "unbekanntes WLAN",
    "motorWarningChecked": false,
-   "addToSensorVal": 0
+   "addToSensorVal": 0,
+   "telegram": {
+     "enable": false,
+     "token": "Create Telegram bot with @BotFather",
+     "chatId": "Get ChatID from @IDBot"
+   }
 };
 exports.defaultSettings = defaultSettings;

@@ -24,6 +24,11 @@ var settingSchema = mongoose.Schema({
    defaultSudSize: Number,
    motorWarningChecked: Boolean,
    addToSensorVal: Number,
+   telegram: {
+     enable: Boolean,
+     token: String,
+     chatId: String,
+   }
 });
 
 // create the model for users and expose it to our app

@@ -1,6 +1,6 @@
 // set up ======================================================================
 // get all the tools we need
-var port = process.env.PORT || 80;
+var port = process.env.PORT || 90;
 var http = require('http');
 var express = require('express'),
    app = module.exports.app = express();
@@ -25,6 +25,7 @@ var MongoStore = require('connect-mongo')(session);
 var sessionStore = new MongoStore({
    url: configDB.url
 });
+var telegram = require('./telegram');
 // old BierBot stuff follows:
 var socket = require('socket.io');
 var busboy = require('connect-busboy'); //middleware for form/file upload
@@ -38,7 +39,7 @@ var nodemailer = require('nodemailer'); // sending emails
 var cpuinfo = require('./libs/cpuid');
 var brewdate = require('./libs/brewdate');
 var defaults = require('./libs/defaults');
-var PD = require('./libs/pd')
+var PD = require('./libs/pd');
 var version = require('./libs/version');
 var common = require('./libs/common');
 version.chmod();
@@ -65,7 +66,7 @@ var iwconfig = require('wireless-tools/iwconfig');
 
 // database ===================================================================
 //var databaseUrl = "brewdb"; // "username:password@example.com/mydb"
-var collections = ["recipes", "logs", "settings", "users", "sessions"]
+var collections = ["recipes", "logs", "settings", "users", "sessions"];
 // recipes: holding all recipes
 // brews: 	holding past brews
 // state: 	holding state info (to be independent from browser data) as
@@ -90,7 +91,7 @@ var bierBotState = {
    //   ssid: 'DIRECT-ED-HP OfficeJet 3830',
    //   security: 'wpa2' } ]
    wifiSignalStrength: null
-}
+};
 
 restoreclear.clearAllSessions();
 
@@ -175,7 +176,7 @@ var beepMorseBeer = function() {
          });
       });
    });
-}
+};
 
 var beepLongLongLong = function() {
 
@@ -236,7 +237,7 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 
 // ID & update =====================================
 var updateAvailable = false;
-var updateAvailableVersion = null
+var updateAvailableVersion = null;
 var updateInProgress = false;
 var updateFilePath = null;
 var cpuid = 'default';
@@ -332,7 +333,7 @@ var iwlistWrapper = function(callback) {
       bierBotState.networks = networks;
       callback(null);
    });
-}
+};
 
 var scanForWifiNetworks = function(callback) {
    const adapterName = 'wlan0';
@@ -369,7 +370,7 @@ var scanForWifiNetworks = function(callback) {
 
       }
    });
-}
+};
 
 var lastWiFiAdapterRestart = 0;
 var restartWiFiAdapater = function(finishedCallback) {
@@ -412,7 +413,7 @@ var restartWiFiAdapater = function(finishedCallback) {
          if (code !== 0) {}
       });
    });
-}
+};
 
 // separate function, since getWifiSignalStrength is only called if wifi is enabled
 var getWifiAvailable = function() {
@@ -437,7 +438,7 @@ var getWifiAvailable = function() {
    } catch (e) {
       brewlog.log("error calling iwconfig:" + e);
    }
-}
+};
 
 
 var getWifiSignalStrength = function() {
@@ -475,14 +476,14 @@ var getWifiSignalStrength = function() {
    } catch (e) {
       brewlog.log("error calling iwconfig:" + e);
    }
-}
+};
 var getWifiSignalStrengthIntervall = null;
 
 // Networking
 var oldWifiSettings = {
    pw: "",
    ssid: "",
-}
+};
 var wifiWatchdogIntervall = null;
 var wifiWatchdogIntervallHour = 0;
 
@@ -500,7 +501,7 @@ var updateNetworking = function(settings) {
 
       // g is for multi matches
       var re = new RegExp('.', 'g');
-      var pwEncrypted = settings.wlanPassphrase.replace(re, "X")
+      var pwEncrypted = settings.wlanPassphrase.replace(re, "X");
       brewlog.log('updating wifi settings (' + settings.wlanSSID + ',' + pwEncrypted + ')...');
 
 
@@ -554,7 +555,7 @@ var updateNetworking = function(settings) {
                   security = elem.security;
                   brewlog.log("security of " + settings.wlanSSID + " is " + security);
                }
-            })
+            });
 
 
             if (security != null) {
@@ -576,7 +577,7 @@ var updateNetworking = function(settings) {
 
                // g is for multi matches
                var re = new RegExp('.', 'g');
-               var pwEncrypted = settings.wlanPassphrase.replace(re, "X")
+               var pwEncrypted = settings.wlanPassphrase.replace(re, "X");
                var commandLog = "sudo ../sys/w.sh \"" + settings.wlanSSID + "\" " +
                   encryption + " " + pwEncrypted + "";
                brewlog.log('executing \"' + commandLog + '\"...');
@@ -621,7 +622,7 @@ var updateNetworking = function(settings) {
          });
       }
    }
-}
+};
 
 // heating cooling =============================================================
 // heating cooling supports only on/off)
@@ -633,7 +634,7 @@ var heatCool = function(targetState) {
       heatingState = targetState;
       addLogToCurrentBrew(function(err) {}, null, null, null, null, heatingState); //  addLogToCurrentBrew = function(callback,temp, stirr, step, comment, heating) {
    }
-}
+};
 var safeModeHeatingCoolingWarned = false;
 var setHeatingCooling = function(targetState) {
    if (heatingCoolingResetMode == true) {
@@ -641,7 +642,7 @@ var setHeatingCooling = function(targetState) {
       return;
    }
    if (safeModeActive == true) {
-      if (safeModeHeatingCoolingWarned = false) {
+      if (safeModeHeatingCoolingWarned == false) {
          brewlog.log("skipping setHeatingCooling since safeModeActive=true...");
          safeModeHeatingCoolingWarned = true;
       }
@@ -660,7 +661,7 @@ var switchHeatingCooling = function() {
 var setHeatingCoolingResetMode = function(enable) {
    heatingCoolingResetMode = enable;
    brewlog.log("heatingCoolingResetMode changed to " + heatingCoolingResetMode);
-}
+};
 
 // routes ======================================================================
 var restore = function() {
@@ -684,7 +685,7 @@ var restore = function() {
    });
 
    restoreclear.restoreFactorySettings();
-}
+};
 var routeSettings = {
    passwordDisabled: false,
 };
@@ -723,7 +724,7 @@ morgan('combined', {
    skip: function(req, res) {
       return res.statusCode < 400
    }
-})
+});
 brewlog.log("Server started and listen to http://127.0.0.1:" + port);
 setTimeout(function() {
    beepLongShort();
@@ -747,8 +748,7 @@ var controlState = {
 
 var tempControlConfig = {
    currentDeltaT: 0,
-
-}
+};
 
 // create reusable transporter object using SMTP transport
 var transporter = nodemailer.createTransport({
@@ -1510,7 +1510,7 @@ io.sockets.on('connection', function(socket) {
                                              brewlog.log('selected new hardware: ' + hw.name);
                                              callback(null, hw._id);
                                           }
-                                       })
+                                       });
                                     }
                                  });
                               }
@@ -1852,6 +1852,7 @@ var finishAutoMode = function(callback) {
                io.sockets.emit('automodeStopped', currentBrew._id);
                enterSafeState();
                beepMorseBeer();
+               telegram.sendMessage('Your brew is done. Get to work!');
             }
 
          }, false);
