@@ -24,7 +24,7 @@ var MongoStore = require('connect-mongo')(session);
 var sessionStore = new MongoStore({
    url: configDB.url
 });
-var telegram = require('./telegram');
+var telegram = require('./libs/telegram');
 // old BierBot stuff follows:
 var socket = require('socket.io');
 var busboy = require('connect-busboy'); //middleware for form/file upload
@@ -42,7 +42,6 @@ var PD = require('./libs/pd');
 var version = require('./libs/version');
 var common = require('./libs/common');
 version.chmod();
-var hostname = require('./libs/hostname');
 var brewlog = require('./libs/brewlog.js');
 var restoreclear = require('./libs/restoreclear.js');
 var plausible = require('./libs/plausible.js');

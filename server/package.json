@@ -31,7 +31,7 @@
         "passport-local": "0.1.6",
         "passport.socketio": "3.4.1",
         "pigpio": "^3.0.0",
-        "request": "2.51.0",
+        "request": "^2.51.0",
         "setup": "0.0.3",
         "socket.io": "1.2.1",
         "uglify-js": "2.6.1",
