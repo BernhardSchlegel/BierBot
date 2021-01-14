@@ -20,9 +20,9 @@ var defaultSettings = {
    "motorWarningChecked": false,
    "addToSensorVal": 0,
    "telegram": {
-     "enable": false,
-     "token": "Create Telegram bot with @BotFather",
-     "chatId": "Get ChatID from @IDBot"
+     "enabled": false,
+     "token": "",
+     "chatId": ""
    }
 };
 exports.defaultSettings = defaultSettings;

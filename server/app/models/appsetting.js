@@ -25,7 +25,7 @@ var settingSchema = mongoose.Schema({
    motorWarningChecked: Boolean,
    addToSensorVal: Number,
    telegram: {
-     enable: Boolean,
+     enabled: Boolean,
      token: String,
      chatId: String,
    }
