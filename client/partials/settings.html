@@ -117,6 +117,7 @@
             {{'SETTINGS_INTERFACEDESC' | translate}}
          </label>
       </div>
+
       <div class="form-group" ng-show="settings.wifiEnabled && bierBotState.wifiAvailable">
          <label class="col-xs-12 col-sm-3 col-md-2 col-lg-2  brew">{{'SETTINGS_WLANSSID' | translate}}</label>
          <div class="col-xs-12 col-sm-4 col-md-2 col-lg-2 ">
@@ -130,13 +131,47 @@
          <label class="col-xs-12 col-sm-5 col-md-4 col-lg-4  brew settings-description">{{'SETTINGS_WLANSSIDDESC' | translate}}</label>
       </div>
 
-
       <div class="form-group" ng-show="settings.wifiEnabled && bierBotState.wifiAvailable">
          <label class="col-xs-12 col-sm-3 col-md-2 col-lg-2  brew">{{'SETTINGS_WLANPW' | translate}}</label>
          <div class="col-xs-12 col-sm-4 col-md-2 col-lg-2 ">
             <input type="password" min=0 max=1024 class="form-control" ng-model="settings.wlanPassphrase">
          </div>
          <label class="col-xs-12 col-sm-5 col-md-4 col-lg-4  brew settings-description">{{'SETTINGS_WLANPWDESC' | translate}}</label>
+      </div>
+
+
+      <h4>{{'SETTINGS_TELEGRAM_HEADER' | translate}}</h4>
+      <div class="form-group">
+         <label class="col-xs-12 col-sm-3 col-md-2 col-lg-2  brew">{{'SETTINGS_TELEGRAM_ENABLE' | translate}}</label>
+         <div class="col-xs-12 col-sm-4 col-md-2 col-lg-2 ">
+            <input type="checkbox" ng-change="pendingChanges = true;" ng-model="settings.telegram.enabled"> {{'ACTIVATE' | translate}}
+         </div>
+         <label class="col-xs-12 col-sm-5 col-md-4 col-lg-4  brew settings-description">
+            {{'SETTINGS_TELEGRAM_ENABLE_DESC' | translate}}
+         </label>
+      </div>
+
+      <div class="form-group" ng-show="settings.telegram.enabled">
+         <label class="col-xs-12 col-sm-3 col-md-2 col-lg-2  brew">{{'SETTINGS_TELEGRAM_TOKEN' | translate}}</label>
+         <div class="col-xs-12 col-sm-4 col-md-2 col-lg-2 ">
+           <input type="text" name="telegram.token" class="form-control" ng-model="settings.telegram.token" required ng-required="true">
+           <span class="help-block" ng-show="settingsForm.telegram.token.$error.required">
+              {{'SETTINGS_TELEGRAM_TOKEN_PLEASE' | translate}}
+           </span></div>
+         <label class="col-xs-12 col-sm-5 col-md-4 col-lg-4  brew settings-description">
+           {{'SETTINGS_TELEGRAM_TOKEN_DESC' | translate}}</label>
+      </div>
+
+      <div class="form-group" ng-show="settings.telegram.enabled">
+         <label class="col-xs-12 col-sm-3 col-md-2 col-lg-2  brew">{{'SETTINGS_TELEGRAM_CHATID' | translate}}</label>
+         <div class="col-xs-12 col-sm-4 col-md-2 col-lg-2 ">
+           <input type="text" name="telegram.chatId" class="form-control" ng-model="settings.telegram.chatId" required ng-required="true">
+           <span class="help-block" ng-show="settingsForm.telegram.chatId.$error.required">
+              {{'SETTINGS_TELEGRAM_CHATID_PLEASE' | translate}}
+           </span>
+          </div>
+         <label class="col-xs-12 col-sm-5 col-md-4 col-lg-4  brew settings-description">
+           {{'SETTINGS_TELEGRAM_CHATID_DESC' | translate}}</label>
       </div>
 
       <h4>{{'SETTINGS_HW' | translate}}</h4>

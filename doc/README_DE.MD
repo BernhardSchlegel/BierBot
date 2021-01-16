@@ -20,6 +20,7 @@ This README is also available in [English ![English](https://raw.githubuserconte
 -   Integriertes Logging: Der Temperaturverlauf wird während dem Brauen angezeigt,
     nach dem Brauvorgang gibt's einen Braubericht.
 -   Passwortschutz (beta)
+-   Kann während des Brauvorgangs Nachrichten an Telegram verschicken
 -   Läuft auf jedem Webbrowser
 
 ## Screenshots

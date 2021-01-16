@@ -14,9 +14,10 @@ This README is also available in [German ![Germany](https://raw.githubuserconten
 -   PD controller that works with a simple and cheap non PWM/SSR relay and yet eliminates temperature overshoots
 -   Modes for mashing and fermentation
 -   Multi-language (German, English, pull-requests welcome)
--   Integreated recipes: Set the temperature, the time, etc.
--   Integerated logging: See your temperature log during the mash and export a PDF after brewing
--   Authentication
+-   Integrated recipes: Set the temperature, the time, etc.
+-   Integrated logging: See your temperature log during the mash and export a PDF after brewing
+-   User authentication
+-   Can send messages to Telegram during brewing
 -   Works perfectly on any web browser
 
 ## Screenshots
