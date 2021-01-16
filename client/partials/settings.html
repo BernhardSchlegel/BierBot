@@ -144,14 +144,14 @@
       <div class="form-group">
          <label class="col-xs-12 col-sm-3 col-md-2 col-lg-2  brew">{{'SETTINGS_TELEGRAM_ENABLE' | translate}}</label>
          <div class="col-xs-12 col-sm-4 col-md-2 col-lg-2 ">
-            <input type="checkbox" ng-change="pendingChanges = true;" ng-model="settings.telegramEnabled"> {{'ACTIVATE' | translate}}
+            <input type="checkbox" ng-change="pendingChanges = true;" ng-model="settings.telegram.enabled"> {{'ACTIVATE' | translate}}
          </div>
          <label class="col-xs-12 col-sm-5 col-md-4 col-lg-4  brew settings-description">
             {{'SETTINGS_TELEGRAM_ENABLE_DESC' | translate}}
          </label>
       </div>
 
-      <div class="form-group" ng-show="settings.telegramEnabled">
+      <div class="form-group" ng-show="settings.telegram.enabled">
          <label class="col-xs-12 col-sm-3 col-md-2 col-lg-2  brew">{{'SETTINGS_TELEGRAM_TOKEN' | translate}}</label>
          <div class="col-xs-12 col-sm-4 col-md-2 col-lg-2 ">
            <input type="text" name="telegram.token" class="form-control" ng-model="settings.telegram.token" required ng-required="true">
@@ -162,7 +162,7 @@
            {{'SETTINGS_TELEGRAM_TOKEN_DESC' | translate}}</label>
       </div>
 
-      <div class="form-group" ng-show="settings.telegramEnabled">
+      <div class="form-group" ng-show="settings.telegram.enabled">
          <label class="col-xs-12 col-sm-3 col-md-2 col-lg-2  brew">{{'SETTINGS_TELEGRAM_CHATID' | translate}}</label>
          <div class="col-xs-12 col-sm-4 col-md-2 col-lg-2 ">
            <input type="text" name="telegram.chatId" class="form-control" ng-model="settings.telegram.chatId" required ng-required="true">

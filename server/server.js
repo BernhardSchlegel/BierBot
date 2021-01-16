@@ -25,6 +25,7 @@ var sessionStore = new MongoStore({
    url: configDB.url
 });
 var telegram = require('./libs/telegram');
+var telegramEnabled;
 // old BierBot stuff follows:
 var socket = require('socket.io');
 var busboy = require('connect-busboy'); //middleware for form/file upload
@@ -700,6 +701,14 @@ Setting.findOne(function(err, appSettings) {
       PD.setBrewDateAsync(brewdate);
       brewlog.setBrewDateAsync(brewdate);
 
+      if (appSettings.telegram.enabled) {
+        telegramEnabled = true;
+        telegram.init(appSettings.telegram.token, appSettings.telegram.chatId);
+        brewlog.log('Telegram bot created');
+      } else {
+        telegramEnabled = false;
+      }
+
       brewRoutes = require('./app/routes.js')(app, express, passport,
          routeSettings, cors, switchHeatingCooling,
          setHeatingCoolingResetMode, restore); // load our routes and pass in our app and fully configured passport
@@ -1056,6 +1065,14 @@ io.sockets.on('connection', function(socket) {
                      brewdate.setUsingSystemDate(!updatedSettings.manualSetTime);
                      routeSettings.passwordDisabled = !updatedSettings.passwordActivated;
                      brewlog.log('passwordDisabled = ' + routeSettings.passwordDisabled);
+
+                     if (updatedSettings.telegram.enabled) {
+                       telegramEnabled = true;
+                       telegram.init(updatedSettings.telegram.token, updatedSettings.telegram.chatId);
+                       brewlog.log('Telegram bot updated');
+                     } else {
+                       telegramEnabled = false;
+                     }
 
                      motorWarningCheckedBuffer = updatedSettings.motorWarningChecked;
                      addToSensorValBuffer = updatedSettings.addToSensorVal;
@@ -1849,7 +1866,10 @@ var finishAutoMode = function(callback) {
                io.sockets.emit('automodeStopped', currentBrew._id);
                enterSafeState();
                beepMorseBeer();
-               telegram.sendMessage('Your brew is done. Get to work!');
+
+               if (telegramEnabled) {
+                 telegram.sendMessage('Your brew is done. I\'m out!');
+               }
             }
 
          }, false);
@@ -2134,6 +2154,10 @@ var setNextStep = function(callback) {
                brewlog.log('next step (' + stepnum + ') set');
                addLogToCurrentBrew(function(err) {}, null, null, stepnum, null); // temp,stirr,step
                beepShortLong();
+
+               if (telegramEnabled === true & currentBrew.steps[stepnum].endStepBy === 'never') {
+                 telegram.sendMessage('Finished step \'' + currentBrew.steps[stepnum].name + '\'. It\'s your turn.');
+               }
 
                safeModeActive = false;
             } else {

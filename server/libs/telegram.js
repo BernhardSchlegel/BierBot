@@ -1,7 +1,11 @@
 const TelegramBot = require('node-telegram-bot-api');
-const token = 'replace me with token from database';
-const bot = new TelegramBot(token, {polling: false});
-const chatId = 'replace me with chatId from database';
+var bot;
+var chatId;
+
+module.exports.init = function(token, id) {
+  bot = new TelegramBot(token, {polling: false});
+  chatId = id;
+};
 
 module.exports.sendMessage = function(message) {
   bot.sendMessage(chatId, message);

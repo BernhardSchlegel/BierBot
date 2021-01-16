@@ -183,7 +183,7 @@
                LOGDETAIL_BACK: 'Back',
                LOGDETAIL_BREWREPORT: 'Report: {{name}}',
                LOGDETAIL_OVERVIEW: 'Overview',
-               LOGDETAIL_RECIPESTEPS: 'Recipesteps',
+               LOGDETAIL_RECIPESTEPS: 'Recipe steps',
                LOGDETAIL_NAME: 'Name',
                LOGDETAIL_PROCESSSTARTED: 'Process started',
                LOGDETAIL_PROCESSFINISHED: 'Process finished',
@@ -209,14 +209,14 @@
                SETTINGS_MOTORV_PRE_TEXT: 'For the love of good. I SWEAR that I checked the list of compatible motors listed in the link given below and that I will not connect some crappy, non PWM-compatible Motor. I\'m aware, that non-observance of this warning can cause serious damage to the BierBot',
                SETTINGS_MOTORV_PRE_LINKTEXT: 'List of compatible motors',
                SETTINGS_MOTORV_PRE_BTN: 'I did check that link.',
-               SETTINGS_MOTORV: 'Stirringspeed',
-               SETTINGS_MOTORVDESC: 'Volts-value to let you control your stirring speed individually.',
+               SETTINGS_MOTORV: 'Stirring speed',
+               SETTINGS_MOTORVDESC: 'Volts value to let you control your stirring speed individually.',
                SETTINGS_MOTORVWARN: 'Prior to setting this value check in any case what the max volts value of the connected motor is (typical values are 12V or 24V). The number set here, must not exceed the maximum and operation voltages given on the motor - otherwise the motor will be damaged permanently. Motor power must not exceed 50W.',
                SETTINGS_INTERFACE: 'Interface',
                SETTINGS_INTERFACEDESC: 'Select which interface to use. Attention: After selecing a different interface the IP is due to change. If you misspelled your WiFi password, don\'t worry: The BierBot will be still available over the ehternet interface.',
-               SETTINGS_WLANSSID: 'WLAN name (SSID)',
+               SETTINGS_WLANSSID: 'WiFi name (SSID)',
                SETTINGS_WLANSSIDDESC: 'Please enter the name of your local wireless network.',
-               SETTINGS_WLANPW: 'WLAN passphrase',
+               SETTINGS_WLANPW: 'WiFi passphrase',
                SETTINGS_WLANPWDESC: 'Enter the passphrase of your network.',
                SETTINGS_NEXTSUDNUM: 'Next sudnumber',
                SETTINGS_NEXTSUDNUMDESC: 'This number is automatically increased after every sud (heating process). This is intended to help you keep track of your different logs and brews.',
@@ -227,9 +227,9 @@
                SETTINGS_REBOOTPLACEHOLDER: 'enter \"bierbot\"',
                SETTINGS_REBOOTBTN: 'reboot',
                SETTINGS_BIERBOTNAME: 'BierBot Name',
-               SETTINGS_BIERBOTNAMEDESC: 'Give your BierBot a unique name. If you own more than one, this helps you differentiating between them.',
+               SETTINGS_BIERBOTNAMEDESC: 'Give your BierBot a unique name. If you own more than one, this helps you differentiate between them.',
                SETTINGS_HW: 'Hardware',
-               SETTINGS_HWSETUP: 'Hardware-Setup',
+               SETTINGS_HWSETUP: 'Hardware setup',
                SETTINGS_HWDESC: 'The BierBot learns about your hardware. Since you probably own more than one heating or cooling device (different hotplates, fridge, heating lamp) it\'s possible to create mutliple hardwares.',
                SETTINGS_HWHYSTERESIS: 'Hystersis',
                SETTINGS_HWHYSTERESISDESC: 'The hysteresis sets, how many degree centigrade the current temperature has to differ from the target temperature, before the heating or cooling is turned on again.',
@@ -260,10 +260,10 @@
                SETTINGS_UPDATEUPTODATE: 'Your BierBot runs the current firmware.',
                SETTINGS_UPDATEAVAILABLE: 'A firmware update is available for your BierBot. As soon as the automatic mode is finished the update can be installed.',
                SETTINGS_STARTUPDATE: 'To start the update please click on "Start". Do not cut the power during the process!',
-               SETTINGS_SERIAL: 'Serialnumber',
-               SETTINGS_SOFTWAREV: 'Firmwareversion',
-               SETTINGS_HWARDWAREREV: 'Hardwarerevision',
-               SETTINGS_BOILINGTHRESHOLD: 'Boiling-Threshold',
+               SETTINGS_SERIAL: 'Serial number',
+               SETTINGS_SOFTWAREV: 'Firmware version',
+               SETTINGS_HWARDWAREREV: 'Hardware revision',
+               SETTINGS_BOILINGTHRESHOLD: 'Boiling threshold',
                SETTINGS_BOILINGTHRESHOLDVALIDNUMBERPLEASE: 'Please enter a valid number within the range 90-110°C.',
                SETTINGS_BOILINGTHRESHOLDDESC: 'Value in °C. If this value is exceeded the mash is considered boiling. Also, if a recipe-step has a temperature higher than the set one, the temperature is regareded "reached" as soon as above this threshold.',
                SETTINGS_ADD_TO_SENSORVAL: 'Calibration',
@@ -276,10 +276,10 @@
                SETTINGS_TELEGRAM_ENABLE: 'Activate Telegram notifications',
                SETTINGS_TELEGRAM_ENABLE_DESC: 'BierBot can send you notifications on Telegram, when the brew is finished or the next step requires your action.',
                SETTINGS_TELEGRAM_TOKEN: 'Token',
-               SETTINGS_TELEGRAM_TOKEN_DESC: 'To use Telegram notifications you must create Telegram bot. Message @BotFather to create a Telegram bot and receive a token.',
+               SETTINGS_TELEGRAM_TOKEN_DESC: 'To use Telegram notifications you must create Telegram bot. Message @BotFather https://telegram.me/botfather to create a Telegram bot and receive a token.',
                SETTINGS_TELEGRAM_TOKEN_PLEASE: 'A token is required to use Telegram notifications.',
                SETTINGS_TELEGRAM_CHATID: 'Chat ID',
-               SETTINGS_TELEGRAM_CHATID_DESC: 'The chat ID defines who notifications are sent to. Message @IDBot to request your chat ID.',
+               SETTINGS_TELEGRAM_CHATID_DESC: 'The chat ID defines who notifications are sent to. Message @myidbot to request your chat ID.',
                SETTINGS_TELEGRAM_CHATID_PLEASE: 'A chat ID is required to use Telegram notifications.',
                FEEDBACK: 'Feedback',
                FEEDBACK_T: 'Send feedback',
@@ -534,7 +534,7 @@
                SETTINGS_TELEGRAM_TOKEN_DESC: 'Um Telegram-Benachrichtigungen nutzen zu können, musst du einen Telegram Bot erstellen. Schreibe @BotFather, um einen Telegram Bot zu erstellen und einen Token zu erhalten.',
                SETTINGS_TELEGRAM_TOKEN_PLEASE: 'Ein Token ist notwendig, um Telegram-Benachrichtigungen nutzen zu können.',
                SETTINGS_TELEGRAM_CHATID: 'Chat-ID',
-               SETTINGS_TELEGRAM_CHATID_DESC: 'Mit der Chat-ID gibst du an, an wen Benachrichtigungen geschickt werden sollen. Schreibe @IDBot, um deine Chat-ID herauszufinden.',
+               SETTINGS_TELEGRAM_CHATID_DESC: 'Mit der Chat-ID gibst du an, an wen Benachrichtigungen geschickt werden sollen. Schreibe @myidbot, um deine Chat-ID herauszufinden.',
                SETTINGS_TELEGRAM_CHATID_PLEASE: 'Eine Chat-ID ist notwendig, um Telegram-Benachrichtigungen nutzen zu können.',
                FEEDBACK: 'Feedback',
                FEEDBACK_T: 'Feedback senden',
@@ -658,8 +658,7 @@
       } catch (ex) {
          console.error("exception: error getting time difference: ", ex);
       }
-
-   }
+   };
 
    var getTimeDiffMinutes = function(date1, date2) {
       try {
@@ -677,7 +676,7 @@
       } catch (ex) {
          console.error("exception: error getTimeDiffMinutes: ", ex);
       }
-   }
+   };
 
    App.controller('ChartControllerDetail', ["$rootScope", "$scope", "Socket", function($rootScope, $scope, Socket) {
       try {
@@ -807,7 +806,7 @@
                   [dateToUse, minTemp],
                   [dateToUse, maxTemp]
                ]
-            })
+            });
 
             //[chartDataTempIdx].values.push([dateToUse , step]);
 
@@ -848,7 +847,6 @@
                };
             }
          };
-
 
 
          $rootScope.$on('rootScope:initChart', function(event, data) {
@@ -1006,11 +1004,12 @@
             $scope.beepLongShort = function() {
                var audio = new Audio('/secure/media/plop.mp3');
                audio.play();
-            }
+            };
+
             $scope.beepLongLongLong = function() {
                var audio = new Audio('/secure/media/plop.mp3');
                audio.play();
-            }
+            };
 
 
             Socket.on('newStepSet', function(data) {
@@ -1269,11 +1268,11 @@
                      //$scope.networks.push({ssid: elem.ssid, signal: elem.signal});
                      $scope.networks.push(elem.ssid);
                   }
-               })
+               });
             }
 
             $scope.scanningForWifi = false;
-         }
+         };
 
          $('#pleaseWaitDialog').modal('show');
          Socket.emit('reportTab', 'settings');
@@ -1313,7 +1312,7 @@
                   }
                }
             });
-         }
+         };
 
          //$scope.languageKey = $translate.use();
 
@@ -1354,7 +1353,7 @@
 
          $scope.selectValueChanged = function() {
 
-         }
+         };
 
          $scope.setAlertMessage = function(speachID) {
 
@@ -1459,7 +1458,7 @@
 
          $scope.cancelEdit = function() {
             $scope.editedHardware = null;
-         }
+         };
 
          $scope.startUpdate = function() {
 
@@ -1476,7 +1475,7 @@
                   $('#resettingDlg').modal('show');
                }
             });
-         }
+         };
 
          $scope.saveSettings = function() {
             $scope.settings.selectedHardware = $scope.selectedHardware._id;
@@ -1617,8 +1616,7 @@
                   $scope.recipe.logs.comments.push(addedComment.comment);
                }
             });
-
-         }
+         };
 
          var initRecipe = function() {
             // set expanded if recipe is set
@@ -1832,7 +1830,7 @@
                $scope.stepEstFinish = "-";
                $scope.remainingTime = "-";
             }
-         }
+         };
 
          Socket.on('newStepSet', function(data) {
             initNewStep(data.number, data.step);
@@ -2073,7 +2071,7 @@
             orderChanged: function(event, $scope) {
                console.log("orderChanged");
                event.dest.sortableScope.$parent.$parent.setEditedRecipe(event.dest.sortableScope.$parent.recipe);
-               console.log("order updated")
+               console.log("order updated");
                event.dest.sortableScope.$parent.$parent.saveEditedRecipe();
                console.log(event);
             },
@@ -2118,7 +2116,7 @@
          //$scope.names = [{val:'bob'},{val:'lucy'},{val:'john'},{val:'luke'},{val:'han'}];
          //$scope.tempplayer = '';
          $scope.updateNames = function() {
-            if ($scope.tempplayer === "") return
+            if ($scope.tempplayer === "") return;
             $scope.names.push({
                val: $scope.tempplayer
             });
@@ -2153,7 +2151,6 @@
                }
             });
 
-
             // brew = angular.copy(recipe);
 
             // brew.activeStep = -1;
@@ -2161,7 +2158,7 @@
 
             // $scope.recipeLoaded = true;
             //
-         }
+         };
 
          $scope.allRecipesToJSON = function() {
             $scope.recipeJSON = angular.toJson($scope.recipes);
@@ -2313,7 +2310,7 @@
          var plainValues = [];
          filteredValues.forEach(function(elem, idx, array) {
             plainValues.push(elem[1]);
-         })
+         });
 
          return plainValues;
       } catch (ex) {
@@ -2364,7 +2361,7 @@
 
          function addLineToStr(str) {
             $scope.CSVstr = $scope.CSVstr + str + "<br/>";
-         };
+         }
 
          function ConvertToCSV(logobj) {
             var array = typeof logobj != 'object' ? JSON.parse(logobj) : logobj;
@@ -2379,7 +2376,7 @@
             $scope.CSVstr = $scope.CSVstr + toCsv(logobj.logs.temperature, null, null);
             $scope.CSVstr = $scope.CSVstr + toCsv(logobj.logs.step, null, null);
             $scope.CSVstr = $scope.CSVstr + toCsv(logobj.logs.heating, null, null);
-         };
+         }
 
          // https://gist.github.com/JeffJacobson/2770509
          /**
@@ -2448,7 +2445,7 @@
                   name = names[n];
                   value = obj[name];
                   if (n > 0) {
-                     row += ","
+                     row += ",";
                   }
                   row += toCsvValue(value, '"');
                }
@@ -2510,7 +2507,7 @@
                end: stepEnd,
                reached: stepReached
             };
-         }
+         };
 
          $scope.getiOSDevice = function() {
             var uagent = navigator.userAgent.toLowerCase();
@@ -2523,7 +2520,7 @@
             } else {
                return false;
             }
-         }
+         };
 
          $scope.getDeltaT = function(stepNum) {
 
@@ -2533,11 +2530,11 @@
             var max = $scope.getStepMaxTemp(stepNum);
             var tdiff = max - min;
             return tdiff / minutes;
-         }
+         };
 
          $scope.getStepTargetTemp = function(stepNum) {
             return $scope.log.steps[stepNum].targetTemperature;
-         }
+         };
 
          $scope.getStepDuration = function(stepNum, type) {
             if (type === 'change') {
@@ -2594,7 +2591,7 @@
             var alertDiv = null;
 
             if (alert.type == 'success') {
-               alertDiv = $('#alertSuccess')
+               alertDiv = $('#alertSuccess');
             } else if (alert.type == 'err') {
                alertDiv = $('#alertFailed');
             } else if (alert.type == 'info') {
