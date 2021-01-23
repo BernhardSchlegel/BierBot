@@ -1,7 +1,7 @@
 // load the things we need
 var mongoose = require('mongoose');
 
-// define the schema for our setting model
+// define the schema for our settings model
 var settingSchema = mongoose.Schema({
    voltsMotorCalibValue: Number,
    sudNumber: Number,
@@ -24,6 +24,11 @@ var settingSchema = mongoose.Schema({
    defaultSudSize: Number,
    motorWarningChecked: Boolean,
    addToSensorVal: Number,
+   telegram: {
+     enabled: Boolean,
+     token: String,
+     chatId: String
+   }
 });
 
 // create the model for users and expose it to our app

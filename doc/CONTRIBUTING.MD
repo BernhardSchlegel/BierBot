@@ -2,7 +2,8 @@
 
 General, short hints to get you started:
 
--   Start the BierBot by `sudo /usr/bin/node /home/pi/BierBot/server/server.js`
+-   To stop the "production" instance of the BierBot, run `sudo systemctl stop bierbot.service`
+-   Start the BierBot by `sudo node /home/pi/BierBot/server/server.js` (if node is not found, try `/usr/bin/node`)
 -   Attach to nodeJS service `sudo node --inspect=0.0.0.0:9229 /home/pi/BierBot/server/server.js`
 -   To view the service logs (might be helpful when the BierBot crashed) `journalctl -e -u bierbot.service`
     or `journalctl -u bierbot.service -f` to follow along.
@@ -34,6 +35,15 @@ RaspberryPis filesystem:
 
 -   Now, create a samba fileshare user by `sudo smbpasswd -a pi` and assign him a
     password when prompted.
+
+### Handy Stuff
+
+To delete the current brew start the mongo console (`pi$ mongo`)
+
+```
+use brewdb
+db.logs.remove({ currentBrew : true })
+```
 
 ### Debugging the database
 

@@ -6,7 +6,6 @@ var express = require('express'),
    app = module.exports.app = express();
 var cookie = require('cookie'); // #OSS delete if it works without it
 var connect = require('connect');
-
 var server = http.createServer(app);
 var io = require('socket.io')(server); //pass a http.Server instance
 server.listen(port); //listen on port
@@ -25,6 +24,8 @@ var MongoStore = require('connect-mongo')(session);
 var sessionStore = new MongoStore({
    url: configDB.url
 });
+var telegram = require('./libs/telegram');
+var telegramEnabled;
 // old BierBot stuff follows:
 var socket = require('socket.io');
 var busboy = require('connect-busboy'); //middleware for form/file upload
@@ -38,11 +39,10 @@ var nodemailer = require('nodemailer'); // sending emails
 var cpuinfo = require('./libs/cpuid');
 var brewdate = require('./libs/brewdate');
 var defaults = require('./libs/defaults');
-var PD = require('./libs/pd')
+var PD = require('./libs/pd');
 var version = require('./libs/version');
 var common = require('./libs/common');
 version.chmod();
-var hostname = require('./libs/hostname');
 var brewlog = require('./libs/brewlog.js');
 var restoreclear = require('./libs/restoreclear.js');
 var plausible = require('./libs/plausible.js');
@@ -65,7 +65,7 @@ var iwconfig = require('wireless-tools/iwconfig');
 
 // database ===================================================================
 //var databaseUrl = "brewdb"; // "username:password@example.com/mydb"
-var collections = ["recipes", "logs", "settings", "users", "sessions"]
+var collections = ["recipes", "logs", "settings", "users", "sessions"];
 // recipes: holding all recipes
 // brews: 	holding past brews
 // state: 	holding state info (to be independent from browser data) as
@@ -90,7 +90,7 @@ var bierBotState = {
    //   ssid: 'DIRECT-ED-HP OfficeJet 3830',
    //   security: 'wpa2' } ]
    wifiSignalStrength: null
-}
+};
 
 restoreclear.clearAllSessions();
 
@@ -175,7 +175,7 @@ var beepMorseBeer = function() {
          });
       });
    });
-}
+};
 
 var beepLongLongLong = function() {
 
@@ -236,7 +236,7 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 
 // ID & update =====================================
 var updateAvailable = false;
-var updateAvailableVersion = null
+var updateAvailableVersion = null;
 var updateInProgress = false;
 var updateFilePath = null;
 var cpuid = 'default';
@@ -313,7 +313,7 @@ Setting.findOne(function(err, appSettings) {
          });
       } else {
          brewlog.log("hardwareRevision present: " + appSettings.hardwareRevision);
-         hardwareRevision = appSettings.hardwareRevision
+         hardwareRevision = appSettings.hardwareRevision;
       }
    }
 });
@@ -332,7 +332,7 @@ var iwlistWrapper = function(callback) {
       bierBotState.networks = networks;
       callback(null);
    });
-}
+};
 
 var scanForWifiNetworks = function(callback) {
    const adapterName = 'wlan0';
@@ -360,7 +360,7 @@ var scanForWifiNetworks = function(callback) {
                callback(err);
             } else {
                // Interface is upsetTimeout(function(){
-               brewlog.log('waiting 10s before scanning (ressource busy)')
+               brewlog.log('waiting 10s before scanning (ressource busy)');
                setTimeout(function() {
                   iwlistWrapper(callback);
                }, 30000); // 2000 is no longer enough for the new pi 2 b
@@ -369,13 +369,13 @@ var scanForWifiNetworks = function(callback) {
 
       }
    });
-}
+};
 
 var lastWiFiAdapterRestart = 0;
 var restartWiFiAdapater = function(finishedCallback) {
    var diffInMs = new Date() - lastWiFiAdapterRestart;
    if (diffInMs < 120000) {
-      brewlog.log("last WiFi reset is less than 120s ago. Aborting...")
+      brewlog.log("last WiFi reset is less than 120s ago. Aborting...");
       return;
    }
    lastWiFiAdapterRestart = new Date();
@@ -412,7 +412,7 @@ var restartWiFiAdapater = function(finishedCallback) {
          if (code !== 0) {}
       });
    });
-}
+};
 
 // separate function, since getWifiSignalStrength is only called if wifi is enabled
 var getWifiAvailable = function() {
@@ -437,7 +437,7 @@ var getWifiAvailable = function() {
    } catch (e) {
       brewlog.log("error calling iwconfig:" + e);
    }
-}
+};
 
 
 var getWifiSignalStrength = function() {
@@ -460,7 +460,7 @@ var getWifiSignalStrength = function() {
                      //brewlog.log("wifi.signal=" +status.signal);
 
                      if (status.signal == 0) {
-                        brewlog.log("connection lost... restarting wifi adapter...")
+                        brewlog.log("connection lost... restarting wifi adapter...");
                         restartWiFiAdapater(function() {
                            brewlog.log("wifi adapter restarted because of connection loss.");
                         });
@@ -475,14 +475,14 @@ var getWifiSignalStrength = function() {
    } catch (e) {
       brewlog.log("error calling iwconfig:" + e);
    }
-}
+};
 var getWifiSignalStrengthIntervall = null;
 
 // Networking
 var oldWifiSettings = {
    pw: "",
    ssid: "",
-}
+};
 var wifiWatchdogIntervall = null;
 var wifiWatchdogIntervallHour = 0;
 
@@ -500,7 +500,7 @@ var updateNetworking = function(settings) {
 
       // g is for multi matches
       var re = new RegExp('.', 'g');
-      var pwEncrypted = settings.wlanPassphrase.replace(re, "X")
+      var pwEncrypted = settings.wlanPassphrase.replace(re, "X");
       brewlog.log('updating wifi settings (' + settings.wlanSSID + ',' + pwEncrypted + ')...');
 
 
@@ -554,7 +554,7 @@ var updateNetworking = function(settings) {
                   security = elem.security;
                   brewlog.log("security of " + settings.wlanSSID + " is " + security);
                }
-            })
+            });
 
 
             if (security != null) {
@@ -576,7 +576,7 @@ var updateNetworking = function(settings) {
 
                // g is for multi matches
                var re = new RegExp('.', 'g');
-               var pwEncrypted = settings.wlanPassphrase.replace(re, "X")
+               var pwEncrypted = settings.wlanPassphrase.replace(re, "X");
                var commandLog = "sudo ../sys/w.sh \"" + settings.wlanSSID + "\" " +
                   encryption + " " + pwEncrypted + "";
                brewlog.log('executing \"' + commandLog + '\"...');
@@ -621,7 +621,7 @@ var updateNetworking = function(settings) {
          });
       }
    }
-}
+};
 
 // heating cooling =============================================================
 // heating cooling supports only on/off)
@@ -633,7 +633,7 @@ var heatCool = function(targetState) {
       heatingState = targetState;
       addLogToCurrentBrew(function(err) {}, null, null, null, null, heatingState); //  addLogToCurrentBrew = function(callback,temp, stirr, step, comment, heating) {
    }
-}
+};
 var safeModeHeatingCoolingWarned = false;
 var setHeatingCooling = function(targetState) {
    if (heatingCoolingResetMode == true) {
@@ -641,7 +641,7 @@ var setHeatingCooling = function(targetState) {
       return;
    }
    if (safeModeActive == true) {
-      if (safeModeHeatingCoolingWarned = false) {
+      if (safeModeHeatingCoolingWarned == false) {
          brewlog.log("skipping setHeatingCooling since safeModeActive=true...");
          safeModeHeatingCoolingWarned = true;
       }
@@ -660,7 +660,7 @@ var switchHeatingCooling = function() {
 var setHeatingCoolingResetMode = function(enable) {
    heatingCoolingResetMode = enable;
    brewlog.log("heatingCoolingResetMode changed to " + heatingCoolingResetMode);
-}
+};
 
 // routes ======================================================================
 var restore = function() {
@@ -684,7 +684,7 @@ var restore = function() {
    });
 
    restoreclear.restoreFactorySettings();
-}
+};
 var routeSettings = {
    passwordDisabled: false,
 };
@@ -700,6 +700,14 @@ Setting.findOne(function(err, appSettings) {
       brewdate.setUsingSystemDate(!appSettings.manualSetTime);
       PD.setBrewDateAsync(brewdate);
       brewlog.setBrewDateAsync(brewdate);
+
+      if (appSettings.telegram.enabled) {
+        telegramEnabled = true;
+        telegram.init(appSettings.telegram.token, appSettings.telegram.chatId);
+        brewlog.log('Telegram bot created');
+      } else {
+        telegramEnabled = false;
+      }
 
       brewRoutes = require('./app/routes.js')(app, express, passport,
          routeSettings, cors, switchHeatingCooling,
@@ -721,9 +729,9 @@ io.use(function(socket, next) {
 var MAIN_INTERVAL_TIME = 1000; // BE EXTREMELY CAREFULL WITH CHANGING THIS SETTING
 morgan('combined', {
    skip: function(req, res) {
-      return res.statusCode < 400
+      return res.statusCode < 400;
    }
-})
+});
 brewlog.log("Server started and listen to http://127.0.0.1:" + port);
 setTimeout(function() {
    beepLongShort();
@@ -747,8 +755,7 @@ var controlState = {
 
 var tempControlConfig = {
    currentDeltaT: 0,
-
-}
+};
 
 // create reusable transporter object using SMTP transport
 var transporter = nodemailer.createTransport({
@@ -808,7 +815,7 @@ function debounce(func, wait, immediate) {
       timeout = setTimeout(later, wait);
       if (callNow) func.apply(context, args);
    };
-};
+}
 
 var debouncedISREvent = debounce(function() {
    brewlog.log('debouncedISREvent called... ');
@@ -819,7 +826,7 @@ var debouncedISREvent = debounce(function() {
 }, 1500 /* DO NOT send a ,false here, cause (!immediate) will already be true*/ );
 
 setTimeout(function() {
-   brewlog.log('setting up ISR delayed (30s)')
+   brewlog.log('setting up ISR delayed (30s)');
    pinTemperaturePlugDetection.on('interrupt', (level) => {
       brewlog.log('temperature plug detection pin changed to LOW (' + level + ')... ');
       debouncedISREvent();
@@ -1001,7 +1008,7 @@ io.sockets.on('connection', function(socket) {
                   loaded: 1,
                   started: 1,
                   finished: 1,
-               }
+               };
 
                brewlog.log('getting all logs ...');
                // get only a subset of fields
@@ -1013,7 +1020,7 @@ io.sockets.on('connection', function(socket) {
                      // assemble return array, holds everything but the logarray itself
                      items.forEach(function(elem, idx, array) {
                         elem.logs = [];
-                     })
+                     });
 
                      callback(false, items);
                      brewlog.log('getAllLogs: ' + items.length + ' logs sent.');
@@ -1059,6 +1066,14 @@ io.sockets.on('connection', function(socket) {
                      routeSettings.passwordDisabled = !updatedSettings.passwordActivated;
                      brewlog.log('passwordDisabled = ' + routeSettings.passwordDisabled);
 
+                     if (updatedSettings.telegram.enabled) {
+                       telegramEnabled = true;
+                       telegram.init(updatedSettings.telegram.token, updatedSettings.telegram.chatId);
+                       brewlog.log('Telegram bot updated');
+                     } else {
+                       telegramEnabled = false;
+                     }
+
                      motorWarningCheckedBuffer = updatedSettings.motorWarningChecked;
                      addToSensorValBuffer = updatedSettings.addToSensorVal;
                      boilingTempCBuffer = updatedSettings.boilingTempC;
@@ -1078,7 +1093,7 @@ io.sockets.on('connection', function(socket) {
                            hardware.pd.hysteresis = incoming.hardware.pd.hysteresis;
 
                            // get the _id since _id cannot be replaced in mongoDB
-                           var id = hardware._id
+                           var id = hardware._id;
 
                            // remove from old object
                            delete hardware._id;
@@ -1108,7 +1123,7 @@ io.sockets.on('connection', function(socket) {
                         }
                      });
                   }
-               })
+               });
             });
 
             socket.on('addCommentToCurrentBrew', function(comment, callback) {
@@ -1352,7 +1367,7 @@ io.sockets.on('connection', function(socket) {
                   // recipe is a old recipe, needs to be updated
                   // get the _id since _id cannot be replaced in mongoDB
                   var stringID = recipe._id;
-                  var id = db.ObjectId(recipe._id)
+                  var id = db.ObjectId(recipe._id);
 
                   // remove from old object
                   delete recipe._id;
@@ -1373,7 +1388,7 @@ io.sockets.on('connection', function(socket) {
                               callback(false, recipe);
                               brewlog.log('recipe (' + recipe.name + ', ' + recipe._id + ') updated');
                            }
-                        })
+                        });
 
                         // db.recipes.find({_id: db.ObjectId(recipe._id)}, function(err, recipes) {
                         // 	if( err || !recipes) brewlog.log("No mathing recipe with id ' + id + ' found");
@@ -1441,7 +1456,7 @@ io.sockets.on('connection', function(socket) {
                         });
                      }
                   }
-               })
+               });
             });
 
 
@@ -1510,7 +1525,7 @@ io.sockets.on('connection', function(socket) {
                                              brewlog.log('selected new hardware: ' + hw.name);
                                              callback(null, hw._id);
                                           }
-                                       })
+                                       });
                                     }
                                  });
                               }
@@ -1532,7 +1547,7 @@ io.sockets.on('connection', function(socket) {
                      PD.reset();
                      callback(null, upsertedHardware);
                   }
-               })
+               });
             });
 
             socket.on('getControlState', function(data, callback) {
@@ -1609,7 +1624,7 @@ var searchTemperatureSensors = function(leftAttempts) {
    } else {
       brewlog.log("no attempts left.");
    }
-}
+};
 
 var initTemperatureSensor = function() {
    var attempts = 10;
@@ -1623,9 +1638,9 @@ sensor.isDriverLoaded(function(err, isLoaded) {
    brewlog.log('w1 bus driver loaded: ' + isLoaded);
 
    if (isLoaded == false) {
-      brewlog.log('loading driver ...')
+      brewlog.log('loading driver ...');
       sensor.loadDriver(function(err) {
-         if (err) brewlog.log('something went wrong loading the driver:', err)
+         if (err) brewlog.log('something went wrong loading the driver:', err);
          else {
             brewlog.log('driver successfully loaded');
             initTemperatureSensor();
@@ -1817,11 +1832,10 @@ var enterSafeState = function() {
    setMotor(0);
    setHeatingCooling(0);
    safeModeActive = true;
-}
-
+};
 
 var finishAutoMode = function(callback) {
-   brewlog.log('finishing auto mode...')
+   brewlog.log('finishing auto mode...');
    getCurrentBrew(function(err, currentBrew) {
       if (err) {
          callback(err, null);
@@ -1852,6 +1866,10 @@ var finishAutoMode = function(callback) {
                io.sockets.emit('automodeStopped', currentBrew._id);
                enterSafeState();
                beepMorseBeer();
+
+               if (telegramEnabled) {
+                 telegram.sendMessage('Your brew is done. I\'m out!');
+               }
             }
 
          }, false);
@@ -1862,7 +1880,7 @@ var finishAutoMode = function(callback) {
 var emptyCurrentBrewBuffer = function() {
    brewlog.log('clearing current brew buffer');
    currentBrewBuffered = null;
-}
+};
 
 var updateCurrentBrewInDatabase = function(clearBuffer, inspect) {
    // some basic checks, in order to determine if the cyclic
@@ -1884,7 +1902,7 @@ var updateCurrentBrewInDatabase = function(clearBuffer, inspect) {
 
             if (id1.equals(id2)) {
                // get the _id since _id cannot be replaced in mongoDB
-               var id = db.ObjectId(currentBrewBuffered._id)
+               var id = db.ObjectId(currentBrewBuffered._id);
                var idBackup = currentBrewBuffered._id;
 
                // remove from old object
@@ -1921,8 +1939,7 @@ var updateCurrentBrewInDatabase = function(clearBuffer, inspect) {
          }
       }
    });
-
-}
+};
 
 // start getting temperature
 var updateCurentBrewInDatabaseIntervalID = setInterval(function() {
@@ -1939,7 +1956,7 @@ var updateCurrentBrew = function(newCurrentBrew, callback, inspect) {
       brewlog.log(util.inspect(currentBrewBuffered, false, null));
    }
    callback(null); // no error
-}
+};
 
 var getCurrentBrewFromDatabase = function(callback) {
    db.logs.find({
@@ -1978,7 +1995,7 @@ var getCurrentBrew = function(callback) {
             currentBrewBuffered = currentBrewDB;
             callback(null, currentBrewDB);
          }
-      })
+      });
    }
 };
 
@@ -2086,7 +2103,7 @@ var transformRecipeToBrew = function(recipe, callback) {
                if (err) {
                   brewlog.log('new sudnumber not stored, error: ' + err);
                }
-            })
+            });
          }
 
          brew.basedOn = brew._id;
@@ -2137,6 +2154,10 @@ var setNextStep = function(callback) {
                brewlog.log('next step (' + stepnum + ') set');
                addLogToCurrentBrew(function(err) {}, null, null, stepnum, null); // temp,stirr,step
                beepShortLong();
+
+               if (telegramEnabled === true & currentBrew.steps[stepnum].endStepBy === 'never') {
+                 telegram.sendMessage('Finished step \'' + currentBrew.steps[stepnum - 1].name + '\'. \'' + currentBrew.steps[stepnum].name + '\' is next. It\'s your turn.');
+               }
 
                safeModeActive = false;
             } else {
@@ -2201,7 +2222,7 @@ var autoModeIntervalID = setInterval(function() {
                      } else {
                         brewlog.log('tempReached is not set (' + currentStep.tempReached + ') ... setting');
                         brewlog.log('targettemp reached, setting holddate');
-                        currentStep.tempReached = getNowDate()
+                        currentStep.tempReached = getNowDate();
 
                         updateCurrentBrew(currentBrew, function(err) {
 
@@ -2318,7 +2339,7 @@ var controlIntervalID = setInterval(function() {
 var getNowDate = function() {
    var now = brewdate.gcd();
    return new Date(now.getTime() + now.getTimezoneOffset());
-}
+};
 
 // init
 // get currentBrew once in order to set auto mode
@@ -2342,7 +2363,7 @@ Setting.findOne(function(err, appSettings) {
       brewlog.log('failed getting app settings: ' + err);
    } else {
       boilingTempCBuffer = appSettings.boilingTempC;
-      brewlog.log("boiling temp set to " + boilingTempCBuffer + "°C.")
+      brewlog.log("boiling temp set to " + boilingTempCBuffer + "°C.");
       Hardware.findById(appSettings.selectedHardware, function(err, hardware) {
          if (err) {
             brewlog.log('getting hardware failed: ' + err);
@@ -2350,7 +2371,7 @@ Setting.findOne(function(err, appSettings) {
             if (hardware) {
                brewlog.log('selected hardware is: ' + hardware.name);
             } else {
-               brewlog.log("no hardware selected.")
+               brewlog.log("no hardware selected.");
             }
          }
       });

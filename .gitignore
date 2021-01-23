@@ -7,3 +7,4 @@ beerlog.log
 server/package-lock.json
 personal.txt
 /private/
+.jshintrc
