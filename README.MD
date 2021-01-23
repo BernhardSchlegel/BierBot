@@ -20,6 +20,12 @@ This README is also available in [German ![Germany](https://raw.githubuserconten
 -   Can send messages to Telegram during brewing
 -   Works perfectly on any web browser
 
+## Updates
+
+- v.2.1.0 (23.01.2021)
+   - Added telegram Bot support, thanks to [@jonathanschneider](https://github.com/jonathanschneider) for the PR
+   - Bugfix BeerXML import now working (again), tested with recipes from [www.brewersfriend](https://www.brewersfriend.com/)
+
 ## Screenshots
 
 <p float="left">

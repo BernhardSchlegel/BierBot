@@ -23,6 +23,11 @@ This README is also available in [English ![English](https://raw.githubuserconte
 -   Kann während des Brauvorgangs Nachrichten an Telegram verschicken
 -   Läuft auf jedem Webbrowser
 
+## Updates
+
+- v.2.1.0 (23.01.2021)
+   - Telegram Support, danke an [@jonathanschneider](https://github.com/jonathanschneider) für den PR
+   - BeerXML import funktioniert nun (wieder), getestet mit Rezepten von [www.brewersfriend](https://www.brewersfriend.com/)
 ## Screenshots
 
 <p float="left">

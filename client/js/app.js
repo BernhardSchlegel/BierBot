@@ -3069,12 +3069,14 @@
             var importedRecipe = {};
 
             importedRecipe.name = recipe.NAME;
-            importedRecipe.description = recipe.TASTE_NOTES;
+            importedRecipe.description = recipe.TASTE_NOTES ?? "";
             importedRecipe.mode = "heat";
             importedRecipe.steps = new Array();
-            recipe.MASH.MASH_STEPS.MASH_STEP.forEach(function(step, idx, array) {
-               console.log(step.NAME + ", " + step.STEP_TEMP + ", " + step.STEP_TIME);
 
+            function addStep(step) {
+               
+               console.log(step.NAME + ", " + step.STEP_TEMP + ", " + step.STEP_TIME);
+   
                tempStep = {};
                tempStep.name = step.NAME;
                tempStep.stirr = true;
@@ -3089,7 +3091,27 @@
                }
 
                importedRecipe.steps.push(tempStep);
-            });
+            }
+
+            if (Array.isArray(recipe.MASH.MASH_STEPS)) {
+               recipe.MASH.MASH_STEPS.MASH_STEP.forEach(function(step, idx, array) {
+                  addStep(step);
+               });
+            } else if (typeof recipe.MASH.MASH_STEPS === 'object' && recipe.MASH.MASH_STEPS !== null) {
+               for (var key in recipe.MASH.MASH_STEPS) {
+                  var step = recipe.MASH.MASH_STEPS[key];
+
+                  if (Array.isArray(step)) {
+                     // multiple steps 
+                     step.forEach(function(step_single, idx, array) {
+                        addStep(step_single);
+                     });
+                  } else {
+                     // single step 
+                     addStep(step);
+                  }
+              }
+            }
 
             importedRecipe._id = null; // save as new recipe
             $scope.importRecipe(importedRecipe);
