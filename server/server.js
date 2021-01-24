@@ -2156,7 +2156,7 @@ var setNextStep = function(callback) {
                beepShortLong();
 
                if (telegramEnabled === true & currentBrew.steps[stepnum].endStepBy === 'never') {
-                 telegram.sendMessage('Finished step \'' + currentBrew.steps[stepnum].name + '\'. It\'s your turn.');
+                 telegram.sendMessage('Finished step \'' + currentBrew.steps[stepnum - 1].name + '\'. \'' + currentBrew.steps[stepnum].name + '\' is next. It\'s your turn.');
                }
 
                safeModeActive = false;
