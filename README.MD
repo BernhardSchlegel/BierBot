@@ -24,9 +24,10 @@ This README is also available in [German ![Germany](https://raw.githubuserconten
 
 To run a manual update:
 
-- Connect to your BierBot using SSH (type `ssh pi@192.168.2.42` in your favorite Terminal, with the IP being the IP of your BierBot).
-- Change into the BierBot folder `cd cd /home/pi/BierBot`
-- Pull the newest version from GitHub `git pull` (depending on your install, you might get permission errors, run `sudo git pull`)
+1. Connect to your BierBot using SSH (type `ssh pi@192.168.2.42` in your favorite Terminal, with the IP being the IP of your BierBot).
+2. Change into the BierBot folder `cd cd /home/pi/BierBot`
+3. Discard any local changes to your BierBot files `git reset --hard`
+4. Pull the newest version from GitHub `git pull` (depending on your install, you might get permission errors, run `sudo git pull`)
 
 - v.2.1.0 (23.01.2021)
    - Added telegram Bot support, thanks to [@jonathanschneider](https://github.com/jonathanschneider) for the PR
