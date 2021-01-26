@@ -14,10 +14,24 @@ This README is also available in [German ![Germany](https://raw.githubuserconten
 -   PD controller that works with a simple and cheap non PWM/SSR relay and yet eliminates temperature overshoots
 -   Modes for mashing and fermentation
 -   Multi-language (German, English, pull-requests welcome)
--   Integreated recipes: Set the temperature, the time, etc.
--   Integerated logging: See your temperature log during the mash and export a PDF after brewing
--   Authentication
+-   Integrated recipes: Set the temperature, the time, etc.
+-   Integrated logging: See your temperature log during the mash and export a PDF after brewing
+-   User authentication
+-   Can send messages to Telegram during brewing
 -   Works perfectly on any web browser
+
+## Updates
+
+To run a manual update:
+
+1. Connect to your BierBot using SSH (type `ssh pi@192.168.2.42` in your favorite Terminal, with the IP being the IP of your BierBot).
+2. Change into the BierBot folder `cd cd /home/pi/BierBot`
+3. Discard any local changes to your BierBot files `git reset --hard`
+4. Pull the newest version from GitHub `git pull` (depending on your install, you might get permission errors, run `sudo git pull`)
+
+- v.2.1.0 (23.01.2021)
+   - Added telegram Bot support, thanks to [@jonathanschneider](https://github.com/jonathanschneider) for the PR
+   - Bugfix BeerXML import now working (again), tested with recipes from [www.brewersfriend](https://www.brewersfriend.com/)
 
 ## Screenshots
 
