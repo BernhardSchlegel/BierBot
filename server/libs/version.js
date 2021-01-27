@@ -28,7 +28,8 @@ var setUpdateFinished = function() {
 
    var versionData = {
       updateFinished: true,
-      version: version
+      version: version,
+      url: "https://codeload.github.com/BernhardSchlegel/BierBot/zip/master"
    }
 
 
