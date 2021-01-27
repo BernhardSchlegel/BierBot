@@ -45,6 +45,21 @@ use brewdb
 db.logs.remove({ currentBrew : true })
 ```
 
+To replace a document (e.g. settings):
+
+```
+use brewdb
+db.settings.remove({})
+db.settings.insert( 
+{
+        "addToSensorVal" : 0,
+        "bierBotName" : "Ben",
+        "boilingTempC" : 95,
+        "defaultSudSize" : 42,
+...
+})
+```
+
 ### Debugging the database
 
 First, open your database for external access: Edit the config from mongo db
