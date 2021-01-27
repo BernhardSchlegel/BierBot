@@ -2155,8 +2155,8 @@ var setNextStep = function(callback) {
                addLogToCurrentBrew(function(err) {}, null, null, stepnum, null); // temp,stirr,step
                beepShortLong();
 
-               if (telegramEnabled === true & currentBrew.steps[stepnum].endStepBy === 'never') {
-                 telegram.sendMessage('Finished step \'' + currentBrew.steps[stepnum - 1].name + '\'. \'' + currentBrew.steps[stepnum].name + '\' is next. It\'s your turn.');
+               if (telegramEnabled) {
+                 telegram.sendMessage('Finished step \'' + currentBrew.steps[stepnum - 1].name + '\'. Starting step \'' + currentBrew.steps[stepnum].name + '\'.');
                }
 
                safeModeActive = false;
