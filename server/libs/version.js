@@ -20,6 +20,7 @@ var newVersionCallback = null; // newVersionCallback(rarpath)
 var finalizeUpdateCallback = null;
 var updatePath = null;
 var rootdir = __dirname + '/../../'; // node process runs in /server - navigate one up
+var AUTO_UPDATE_ENABLED = false;
 
 var exports = module.exports = {};
 
@@ -81,32 +82,34 @@ exports.init = function(owncpuid, newVersionCallbackInit, finalizeUpdateCallback
    newVersionCallback = newVersionCallbackInit;
    finalizeUpdateCallback = finalizeUpdateCallbackInit;
 
-   // get own
-   getVersionFromFile(function(err, versionFromFile) {
-      if (!err) {
-         version = versionFromFile;
-         brewlog.log('auto update initialized (' + cpuid + ', ' + version + ')');
+   if (AUTO_UPDATE_ENABLED) {
+      // get own
+      getVersionFromFile(function(err, versionFromFile) {
+         if (!err) {
+            version = versionFromFile;
+            brewlog.log('auto update initialized (' + cpuid + ', ' + version + ')');
 
-         // if its the first start with the new version
-         updateIsFinalized(function(err, finished) {
-            if (finished == false) {
-               brewlog.log('finalizing update ...');
-               if (finalizeUpdateCallback) {
-                  finalizeUpdateCallback();
-                  setUpdateFinished();
+            // if its the first start with the new version
+            updateIsFinalized(function(err, finished) {
+               if (finished == false) {
+                  brewlog.log('finalizing update ...');
+                  if (finalizeUpdateCallback) {
+                     finalizeUpdateCallback();
+                     setUpdateFinished();
+                  }
                }
-            }
-         });
+            });
 
-         // check for new version once
-         checkForNewVersion();
-
-         // set intervall
-         var checkVersionIntervalID = setInterval(function() {
+            // check for new version once
             checkForNewVersion();
-         }, 24 * 60 * 60 * 1000); // check once a day, carefull that check isn't called twice
-      }
-   });
+
+            // set intervall
+            var checkVersionIntervalID = setInterval(function() {
+               checkForNewVersion();
+            }, 24 * 60 * 60 * 1000); // check once a day, carefull that check isn't called twice
+         }
+      });
+   }
 }
 
 exports.getVersion = function() {
