@@ -274,7 +274,7 @@
                SETTINGS_DEFAULTSUDSIZEDESC: 'Standard amount of mash in litres, that is the default value when starting a new sud.',
                SETTINGS_TELEGRAM_HEADER: 'Telegram notifications',
                SETTINGS_TELEGRAM_ENABLE: 'Activate Telegram notifications',
-               SETTINGS_TELEGRAM_ENABLE_DESC: 'BierBot can send you notifications on Telegram, when the brew is finished or the next step requires your action.',
+               SETTINGS_TELEGRAM_ENABLE_DESC: 'BierBot can send you notifications on Telegram, when a step is finished.',
                SETTINGS_TELEGRAM_TOKEN: 'Token',
                SETTINGS_TELEGRAM_TOKEN_DESC: 'To use Telegram notifications you must create Telegram bot. Message @BotFather https://telegram.me/botfather to create a Telegram bot and receive a token.',
                SETTINGS_TELEGRAM_TOKEN_PLEASE: 'A token is required to use Telegram notifications.',
@@ -529,7 +529,7 @@
                SETTINGS_DEFAULTSUDSIZEDESC: 'Sudgröße in Litern (l), die standardmäßig beim Starten eines neuen Sudes verwendet wird.',
                SETTINGS_TELEGRAM_HEADER: 'Telegram-Benachrichtigungen',
                SETTINGS_TELEGRAM_ENABLE: 'Benachrichtigungen aktivieren',
-               SETTINGS_TELEGRAM_ENABLE_DESC: 'BierBot kann dir Benachrichtigungen an Telegram schicken, wenn der Brauvorgang abgeschlossen ist oder der nächste Schritt dein Eingreifen erfordert.',
+               SETTINGS_TELEGRAM_ENABLE_DESC: 'BierBot kann dir Benachrichtigungen an Telegram schicken, wenn ein Schritt abgeschlossen ist.',
                SETTINGS_TELEGRAM_TOKEN: 'Token',
                SETTINGS_TELEGRAM_TOKEN_DESC: 'Um Telegram-Benachrichtigungen nutzen zu können, musst du einen Telegram Bot erstellen. Schreibe @BotFather, um einen Telegram Bot zu erstellen und einen Token zu erhalten.',
                SETTINGS_TELEGRAM_TOKEN_PLEASE: 'Ein Token ist notwendig, um Telegram-Benachrichtigungen nutzen zu können.',
@@ -3074,9 +3074,9 @@
             importedRecipe.steps = new Array();
 
             function addStep(step) {
-               
+
                console.log(step.NAME + ", " + step.STEP_TEMP + ", " + step.STEP_TIME);
-   
+
                tempStep = {};
                tempStep.name = step.NAME;
                tempStep.stirr = true;
@@ -3102,12 +3102,12 @@
                   var step = recipe.MASH.MASH_STEPS[key];
 
                   if (Array.isArray(step)) {
-                     // multiple steps 
+                     // multiple steps
                      step.forEach(function(step_single, idx, array) {
                         addStep(step_single);
                      });
                   } else {
-                     // single step 
+                     // single step
                      addStep(step);
                   }
               }
