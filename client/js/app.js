@@ -274,12 +274,12 @@
                SETTINGS_DEFAULTSUDSIZEDESC: 'Standard amount of mash in litres, that is the default value when starting a new sud.',
                SETTINGS_TELEGRAM_HEADER: 'Telegram notifications',
                SETTINGS_TELEGRAM_ENABLE: 'Activate Telegram notifications',
-               SETTINGS_TELEGRAM_ENABLE_DESC: 'BierBot can send you notifications on Telegram, when the brew is finished or the next step requires your action.',
+               SETTINGS_TELEGRAM_ENABLE_DESC: 'BierBot can send you notifications on Telegram, when a step is finished.',
                SETTINGS_TELEGRAM_TOKEN: 'Token',
                SETTINGS_TELEGRAM_TOKEN_DESC: 'To use Telegram notifications you must create Telegram bot. Message @BotFather https://telegram.me/botfather to create a Telegram bot and receive a token.',
                SETTINGS_TELEGRAM_TOKEN_PLEASE: 'A token is required to use Telegram notifications.',
                SETTINGS_TELEGRAM_CHATID: 'Chat ID',
-               SETTINGS_TELEGRAM_CHATID_DESC: 'The chat ID defines who notifications are sent to. Message @myidbot to request your chat ID.',
+               SETTINGS_TELEGRAM_CHATID_DESC: 'The chat ID defines who notifications are sent to. Message @myidbot to request your chat ID. You may provide multiple chat IDs separated by a comma.',
                SETTINGS_TELEGRAM_CHATID_PLEASE: 'A chat ID is required to use Telegram notifications.',
                FEEDBACK: 'Feedback',
                FEEDBACK_T: 'Send feedback',
@@ -529,12 +529,12 @@
                SETTINGS_DEFAULTSUDSIZEDESC: 'Sudgröße in Litern (l), die standardmäßig beim Starten eines neuen Sudes verwendet wird.',
                SETTINGS_TELEGRAM_HEADER: 'Telegram-Benachrichtigungen',
                SETTINGS_TELEGRAM_ENABLE: 'Benachrichtigungen aktivieren',
-               SETTINGS_TELEGRAM_ENABLE_DESC: 'BierBot kann dir Benachrichtigungen an Telegram schicken, wenn der Brauvorgang abgeschlossen ist oder der nächste Schritt dein Eingreifen erfordert.',
+               SETTINGS_TELEGRAM_ENABLE_DESC: 'BierBot kann dir Benachrichtigungen an Telegram schicken, wenn ein Schritt abgeschlossen ist.',
                SETTINGS_TELEGRAM_TOKEN: 'Token',
                SETTINGS_TELEGRAM_TOKEN_DESC: 'Um Telegram-Benachrichtigungen nutzen zu können, musst du einen Telegram Bot erstellen. Schreibe @BotFather, um einen Telegram Bot zu erstellen und einen Token zu erhalten.',
                SETTINGS_TELEGRAM_TOKEN_PLEASE: 'Ein Token ist notwendig, um Telegram-Benachrichtigungen nutzen zu können.',
                SETTINGS_TELEGRAM_CHATID: 'Chat-ID',
-               SETTINGS_TELEGRAM_CHATID_DESC: 'Mit der Chat-ID gibst du an, an wen Benachrichtigungen geschickt werden sollen. Schreibe @myidbot, um deine Chat-ID herauszufinden.',
+               SETTINGS_TELEGRAM_CHATID_DESC: 'Mit der Chat-ID gibst du an, an wen Benachrichtigungen geschickt werden sollen. Schreibe @myidbot, um deine Chat-ID herauszufinden. Du kannst auch mehrere Chat-IDs angeben, indem du sie mit einem Komma trennst.',
                SETTINGS_TELEGRAM_CHATID_PLEASE: 'Eine Chat-ID ist notwendig, um Telegram-Benachrichtigungen nutzen zu können.',
                FEEDBACK: 'Feedback',
                FEEDBACK_T: 'Feedback senden',
@@ -3074,9 +3074,9 @@
             importedRecipe.steps = new Array();
 
             function addStep(step) {
-               
+
                console.log(step.NAME + ", " + step.STEP_TEMP + ", " + step.STEP_TIME);
-   
+
                tempStep = {};
                tempStep.name = step.NAME;
                tempStep.stirr = true;
@@ -3102,12 +3102,12 @@
                   var step = recipe.MASH.MASH_STEPS[key];
 
                   if (Array.isArray(step)) {
-                     // multiple steps 
+                     // multiple steps
                      step.forEach(function(step_single, idx, array) {
                         addStep(step_single);
                      });
                   } else {
-                     // single step 
+                     // single step
                      addStep(step);
                   }
               }

@@ -1,12 +1,14 @@
 const TelegramBot = require('node-telegram-bot-api');
 var bot;
-var chatId;
+var chatIds;
 
-module.exports.init = function(token, id) {
+module.exports.init = function(token, chatId) {
   bot = new TelegramBot(token, {polling: false});
-  chatId = id;
+  chatIds = chatId.split(',');
 };
 
 module.exports.sendMessage = function(message) {
-  bot.sendMessage(chatId, message);
+  chatIds.forEach(chatId => {
+    bot.sendMessage(chatId, message);
+  });
 };
