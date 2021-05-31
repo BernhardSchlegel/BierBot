@@ -60,6 +60,7 @@
          </label>
       </div>
 
+
       <div class="form-group">
          <label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 brew">{{'SETTINGS_DEFAULTSUDSIZE' | translate}}</label>
          <div class="col-xs-12 col-sm-4 col-md-2 col-lg-2 ">
@@ -154,7 +155,7 @@
       <div class="form-group" ng-show="settings.telegram.enabled">
          <label class="col-xs-12 col-sm-3 col-md-2 col-lg-2  brew">{{'SETTINGS_TELEGRAM_TOKEN' | translate}}</label>
          <div class="col-xs-12 col-sm-4 col-md-2 col-lg-2 ">
-           <input type="text" name="telegram.token" class="form-control" ng-model="settings.telegram.token" required ng-required="true">
+           <input type="text" name="telegram.token" class="form-control" ng-model="settings.telegram.token" required ng-required="settings.telegram.enabled">
            <span class="help-block" ng-show="settingsForm.telegram.token.$error.required">
               {{'SETTINGS_TELEGRAM_TOKEN_PLEASE' | translate}}
            </span></div>
@@ -165,7 +166,7 @@
       <div class="form-group" ng-show="settings.telegram.enabled">
          <label class="col-xs-12 col-sm-3 col-md-2 col-lg-2  brew">{{'SETTINGS_TELEGRAM_CHATID' | translate}}</label>
          <div class="col-xs-12 col-sm-4 col-md-2 col-lg-2 ">
-           <input type="text" name="telegram.chatId" class="form-control" ng-model="settings.telegram.chatId" required ng-required="true">
+           <input type="text" name="telegram.chatId" class="form-control" ng-model="settings.telegram.chatId" required ng-required="settings.telegram.enabled">
            <span class="help-block" ng-show="settingsForm.telegram.chatId.$error.required">
               {{'SETTINGS_TELEGRAM_CHATID_PLEASE' | translate}}
            </span>
