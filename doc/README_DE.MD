@@ -5,6 +5,10 @@
 
 This README is also available in [English ![English](https://raw.githubusercontent.com/stevenrskelton/flag-icon/master/png/16/country-4x3/us.png "English")](../README.MD)
 
+## Bitte aktuelle Version benutzen ⚠
+
+Diese Software wird nicht mehr aktiv weiterentwickelt. Bitte benutze statt dessen den "BierBot Bricks Raspberry Pi" - [kostenlos erhältlich hier](https://github.com/BernhardSchlegel/BierBot-Bricks-RaspberryPi). Wenn du maintainer dieses repos werden willst, erstelle bitte ein Issue und melde dich.
+
 ## Funktionen
 
 -   Läuft auf dem Raspberry Pi ([kompatibile Pis](#kompatiblität))
