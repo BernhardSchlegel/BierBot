@@ -5,6 +5,10 @@
 
 This README is also available in [German ![Germany](https://raw.githubusercontent.com/stevenrskelton/flag-icon/master/png/16/country-4x3/de.png "Germany")](./doc/README_DE.MD)
 
+## Deprecation Notice ⚠
+
+This repository is no longer actively developed. Please use the "BierBot Bricks Raspberry Pi"-client instead. Available for [free here](https://github.com/BernhardSchlegel/BierBot-Bricks-RaspberryPi). If you want to be maintainer, please create an issue and reach out!
+
 ## Key features
 
 -   Runs on Raspberry Pi ([compatible Pis](#compatibility))
